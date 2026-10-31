@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Phone,
+  MessageCircle,
   Mail,
   MapPin,
   Clock,
@@ -108,6 +109,10 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               <div className="flex items-center gap-2 text-slate-300">
                 <Phone className="w-4 h-4 text-emerald-400 shrink-0" />
                 <a href="tel:+2348135933346" className="hover:text-white transition">+234 813 593 3346</a>
+              </div>
+              <div className="flex items-center gap-2 text-slate-300">
+                <MessageCircle className="w-4 h-4 text-emerald-400 shrink-0" />
+                <a href="https://wa.me/2348135933346" target="_blank" rel="noopener noreferrer" className="hover:text-white transition">WhatsApp: +234 813 593 3346</a>
               </div>
               <div className="flex items-center gap-2 text-slate-300">
                 <Mail className="w-4 h-4 text-cyan-400 shrink-0" />
