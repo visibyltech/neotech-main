@@ -1,0 +1,6 @@
+{
+  "name": "Neo Tech Gadget",
+  "description": "Premium Nigerian electronics and smartphone retail platform featuring iPhones, Android smartphones, Pay Now, Credably Buy Now Pay Later (BNPL), and Save to Buy plans.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

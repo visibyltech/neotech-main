@@ -1,0 +1,252 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Registered customer profile and contact details",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "fullName": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "role": { "type": "string", "enum": ["customer", "admin"] },
+        "profilePhotoUrl": { "type": "string" },
+        "savedAddresses": { "type": "array" },
+        "wishlist": { "type": "array" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["fullName", "email"]
+    },
+    "Admin": {
+      "title": "Admin",
+      "description": "Authorized administrator lookup document",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string" },
+        "role": { "type": "string" },
+        "grantedAt": { "type": "string" }
+      },
+      "required": ["email", "role"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Smartphone or accessory retail product",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "brand": { "type": "string" },
+        "model": { "type": "string" },
+        "description": { "type": "string" },
+        "price": { "type": "number" },
+        "previousPrice": { "type": "number" },
+        "condition": { "type": "string", "enum": ["brand-new", "uk-used"] },
+        "colors": { "type": "array" },
+        "storageOptions": { "type": "array" },
+        "stock": { "type": "number" },
+        "images": { "type": "array" },
+        "specifications": { "type": "object" },
+        "warranty": { "type": "string" },
+        "isAvailable": { "type": "boolean" },
+        "batteryHealth": { "type": "number" },
+        "simConfig": { "type": "string" },
+        "faceId": { "type": "string" },
+        "physicalCondition": { "type": "string" },
+        "networkStatus": { "type": "string" },
+        "categoryId": { "type": "string" },
+        "featured": { "type": "boolean" },
+        "isNewArrival": { "type": "boolean" },
+        "isBestSeller": { "type": "boolean" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["name", "brand", "price", "condition", "stock", "categoryId"]
+    },
+    "Category": {
+      "title": "Category",
+      "description": "Product categorization group",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "slug": { "type": "string" },
+        "icon": { "type": "string" },
+        "itemCount": { "type": "number" }
+      },
+      "required": ["name", "slug"]
+    },
+    "Banner": {
+      "title": "Banner",
+      "description": "Homepage promotional slide",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "subtitle": { "type": "string" },
+        "badge": { "type": "string" },
+        "ctaText": { "type": "string" },
+        "ctaLink": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "order": { "type": "number" },
+        "isActive": { "type": "boolean" },
+        "bgGradient": { "type": "string" }
+      },
+      "required": ["title", "ctaLink"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer purchase transaction record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "orderNumber": { "type": "string" },
+        "userId": { "type": "string" },
+        "customerName": { "type": "string" },
+        "customerEmail": { "type": "string" },
+        "customerPhone": { "type": "string" },
+        "items": { "type": "array" },
+        "subtotal": { "type": "number" },
+        "deliveryFee": { "type": "number" },
+        "total": { "type": "number" },
+        "fulfillmentType": { "type": "string", "enum": ["delivery", "pickup"] },
+        "deliveryAddress": { "type": "object" },
+        "deliveryInstructions": { "type": "string" },
+        "paymentMethod": { "type": "string", "enum": ["pay-now", "credably-bnpl", "save-to-buy"] },
+        "paymentStatus": { "type": "string", "enum": ["pending", "verifying", "paid", "failed"] },
+        "orderStatus": { "type": "string" },
+        "paymentReference": { "type": "string" },
+        "proofOfPaymentUrl": { "type": "string" },
+        "trackingNumber": { "type": "string" },
+        "notes": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["orderNumber", "customerName", "customerEmail", "customerPhone", "items", "total", "paymentMethod"]
+    },
+    "SavingsPlan": {
+      "title": "SavingsPlan",
+      "description": "Structured Save to Buy plan for a product",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "productId": { "type": "string" },
+        "productName": { "type": "string" },
+        "productImage": { "type": "string" },
+        "targetAmount": { "type": "number" },
+        "savedAmount": { "type": "number" },
+        "frequency": { "type": "string", "enum": ["daily", "weekly", "monthly"] },
+        "durationWeeks": { "type": "number" },
+        "depositAmount": { "type": "number" },
+        "startDate": { "type": "string" },
+        "targetDate": { "type": "string" },
+        "nextExpectedDepositDate": { "type": "string" },
+        "status": { "type": "string", "enum": ["active", "completed", "cancelled", "converted_to_order"] },
+        "orderId": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["userId", "productId", "targetAmount", "savedAmount", "frequency", "status"]
+    },
+    "SavingsTransaction": {
+      "title": "SavingsTransaction",
+      "description": "A deposit transaction towards a Save to Buy plan",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "planId": { "type": "string" },
+        "userId": { "type": "string" },
+        "amount": { "type": "number" },
+        "paymentMethod": { "type": "string" },
+        "reference": { "type": "string" },
+        "proofOfPaymentUrl": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "verified", "rejected"] },
+        "verifiedBy": { "type": "string" },
+        "verifiedAt": { "type": "string" },
+        "notes": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["planId", "userId", "amount", "status"]
+    },
+    "BNPLApplication": {
+      "title": "BNPLApplication",
+      "description": "Credably Buy Now Pay Later financing application",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "orderId": { "type": "string" },
+        "productId": { "type": "string" },
+        "requestedAmount": { "type": "number" },
+        "customerDetails": { "type": "object" },
+        "employmentStatus": { "type": "string" },
+        "monthlyIncome": { "type": "number" },
+        "tenureMonths": { "type": "number" },
+        "monthlyInstallment": { "type": "number" },
+        "credablyReference": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "approved", "rejected", "disbursed", "cancelled"] },
+        "credablyDecisionNotes": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["userId", "requestedAmount", "status"]
+    },
+    "BusinessSettings": {
+      "title": "BusinessSettings",
+      "description": "Store configuration including bank details, delivery, and Credably settings",
+      "type": "object",
+      "properties": {
+        "bankDetails": { "type": "object" },
+        "contactInfo": { "type": "object" },
+        "deliveryFees": { "type": "object" },
+        "savingsRules": { "type": "object" },
+        "credablyConfig": { "type": "object" },
+        "emailSettings": { "type": "object" },
+        "updatedAt": { "type": "string" }
+      }
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Customer profiles and addresses"
+    },
+    "/admins/{adminId}": {
+      "schema": "Admin",
+      "description": "Admins with dashboard access"
+    },
+    "/products/{productId}": {
+      "schema": "Product",
+      "description": "Available smartphone and gadget inventory"
+    },
+    "/categories/{categoryId}": {
+      "schema": "Category",
+      "description": "Product categories"
+    },
+    "/banners/{bannerId}": {
+      "schema": "Banner",
+      "description": "Homepage promotional carousel banners"
+    },
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Orders created by customers"
+    },
+    "/savingsPlans/{planId}": {
+      "schema": "SavingsPlan",
+      "description": "Save to Buy accounts"
+    },
+    "/savingsTransactions/{txId}": {
+      "schema": "SavingsTransaction",
+      "description": "Deposits towards savings plans"
+    },
+    "/bnplApplications/{appId}": {
+      "schema": "BNPLApplication",
+      "description": "Credably BNPL financing requests"
+    },
+    "/businessSettings/{docId}": {
+      "schema": "BusinessSettings",
+      "description": "Store operational settings"
+    }
+  }
+}
