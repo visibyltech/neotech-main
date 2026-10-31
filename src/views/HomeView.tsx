@@ -407,7 +407,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
 
       {/* 9. Trust & Customer Guarantee */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-10">
+        <div className="text-center max-w-2xl mx-auto mb-5 sm:mb-8">
           <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">
             Why Customers Across Nigeria Choose Neo Tech Gadget
           </h3>
@@ -416,43 +416,43 @@ export const HomeView: React.FC<HomeViewProps> = ({
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 text-center space-y-2">
-            <div className="w-12 h-12 rounded-xl bg-red-600/10 border border-red-500/30 flex items-center justify-center text-red-500 mx-auto">
-              <ShieldCheck className="w-6 h-6" />
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+          <div className="min-w-0 p-3 sm:p-5 rounded-xl sm:rounded-2xl bg-slate-900 border border-slate-800 text-center space-y-1.5 sm:space-y-2">
+            <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-red-600/10 border border-red-500/30 flex items-center justify-center text-red-500 mx-auto">
+              <ShieldCheck className="w-4 h-4 sm:w-6 h-6" />
             </div>
-            <h4 className="font-bold text-white text-sm">6-12 Months Warranty</h4>
-            <p className="text-xs text-slate-400 leading-relaxed">
+            <h4 className="font-bold text-white text-[11px] sm:text-sm leading-tight">6-12 Months Warranty</h4>
+            <p className="text-[10px] sm:text-xs text-slate-400 leading-snug sm:leading-relaxed">
               Every device comes with genuine warranty coverage and diagnostic support.
             </p>
           </div>
 
-          <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 text-center space-y-2">
-            <div className="w-12 h-12 rounded-xl bg-emerald-600/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mx-auto">
-              <Truck className="w-6 h-6" />
+          <div className="min-w-0 p-3 sm:p-5 rounded-xl sm:rounded-2xl bg-slate-900 border border-slate-800 text-center space-y-1.5 sm:space-y-2">
+            <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-emerald-600/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mx-auto">
+              <Truck className="w-4 h-4 sm:w-6 h-6" />
             </div>
-            <h4 className="font-bold text-white text-sm">Nationwide Delivery</h4>
-            <p className="text-xs text-slate-400 leading-relaxed">
+            <h4 className="font-bold text-white text-[11px] sm:text-sm leading-tight">Nationwide Delivery</h4>
+            <p className="text-[10px] sm:text-xs text-slate-400 leading-snug sm:leading-relaxed">
               Fast delivery across Lagos, Abuja, Port Harcourt, Ibadan, and all 36 Nigerian states.
             </p>
           </div>
 
-          <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 text-center space-y-2">
-            <div className="w-12 h-12 rounded-xl bg-cyan-600/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mx-auto">
-              <BatteryCharging className="w-6 h-6" />
+          <div className="min-w-0 p-3 sm:p-5 rounded-xl sm:rounded-2xl bg-slate-900 border border-slate-800 text-center space-y-1.5 sm:space-y-2">
+            <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-cyan-600/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mx-auto">
+              <BatteryCharging className="w-4 h-4 sm:w-6 h-6" />
             </div>
-            <h4 className="font-bold text-white text-sm">Tested Battery Health</h4>
-            <p className="text-xs text-slate-400 leading-relaxed">
+            <h4 className="font-bold text-white text-[11px] sm:text-sm leading-tight">Tested Battery Health</h4>
+            <p className="text-[10px] sm:text-xs text-slate-400 leading-snug sm:leading-relaxed">
               All UK-used iPhones have verified battery health and original Apple displays.
             </p>
           </div>
 
-          <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 text-center space-y-2">
-            <div className="w-12 h-12 rounded-xl bg-amber-600/10 border border-amber-500/30 flex items-center justify-center text-amber-400 mx-auto">
-              <Lock className="w-6 h-6" />
+          <div className="min-w-0 p-3 sm:p-5 rounded-xl sm:rounded-2xl bg-slate-900 border border-slate-800 text-center space-y-1.5 sm:space-y-2">
+            <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-amber-600/10 border border-amber-500/30 flex items-center justify-center text-amber-400 mx-auto">
+              <Lock className="w-4 h-4 sm:w-6 h-6" />
             </div>
-            <h4 className="font-bold text-white text-sm">Verified Payments</h4>
-            <p className="text-xs text-slate-400 leading-relaxed">
+            <h4 className="font-bold text-white text-[11px] sm:text-sm leading-tight">Verified Payments</h4>
+            <p className="text-[10px] sm:text-xs text-slate-400 leading-snug sm:leading-relaxed">
               Bank transfers and deposits are verified before order processing for total security.
             </p>
           </div>
