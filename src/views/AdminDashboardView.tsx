@@ -600,7 +600,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                       <p className="text-slate-400">
                         {order.fulfillmentType === 'delivery'
                           ? `${order.deliveryAddress?.fullAddress}, ${order.deliveryAddress?.state}`
-                          : 'Pickup: Ikeja Experience Center'}
+                          : 'Pickup: Robinson Plaza, Warri'}
                       </p>
                     </div>
 
