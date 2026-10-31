@@ -384,10 +384,10 @@ export const INITIAL_SETTINGS: BusinessSettings = {
     instructions: 'Include your Order Reference or Savings Plan ID as narration. Upload transfer receipt for rapid verification.',
   },
   contactInfo: {
-    phone: '+234 814 902 4432',
+    phone: '+234 813 593 3346',
     email: 'sales@neotechgadget.com',
-    address: 'Suite B4, Tech Plaza, Otigba Street, Computer Village, Ikeja, Lagos, Nigeria',
-    whatsappNumber: '2348149024432',
+    address: 'SHOP C38, ROBINSON PLAZA, DECO ROAD, WARRI, DELTA STATE, NIGERIA',
+    whatsappNumber: '2348135933346',
     openingHours: 'Mon - Sat: 8:30 AM - 6:30 PM (WAT)',
   },
   deliveryFees: {
@@ -405,18 +405,11 @@ export const INITIAL_SETTINGS: BusinessSettings = {
   },
   pickupLocations: [
     {
-      id: 'ikeja-hub',
-      name: 'Neo Tech Gadget Experience Center (Ikeja)',
-      address: 'Suite B4, Tech Plaza, Otigba Street, Computer Village, Ikeja, Lagos',
-      phone: '+234 814 902 4432',
-      readyTime: 'Ready in 2 hours for in-stock devices',
-    },
-    {
-      id: 'vi-pickup',
-      name: 'Neo Tech Gadget Concierge (Victoria Island)',
-      address: 'Plot 12, Adeola Odeku Street, Victoria Island, Lagos',
-      phone: '+234 814 902 4433',
-      readyTime: 'Ready next business day',
+      id: 'warri-store',
+      name: 'Neo Tech Gadget — Robinson Plaza Store',
+      address: 'SHOP C38, ROBINSON PLAZA, DECO ROAD, WARRI, DELTA STATE, NIGERIA',
+      phone: '+234 813 593 3346',
+      readyTime: 'Ready for collection after payment verification',
     },
   ],
   savingsRules: {
