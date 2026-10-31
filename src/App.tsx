@@ -221,7 +221,7 @@ function MainApp() {
       {currentView !== 'admin' && <Footer onNavigate={handleNavigate} />}
 
       {/* Floating WhatsApp Support Button */}
-      <WhatsAppButton whatsappNumber={settings?.contactInfo.whatsappNumber || '2348149024432'} />
+      <WhatsAppButton whatsappNumber={settings?.contactInfo.whatsappNumber || '2348135933346'} />
 
       {/* Authentication Modal */}
       <AuthModal />
