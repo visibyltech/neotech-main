@@ -263,39 +263,39 @@ export const HomeView: React.FC<HomeViewProps> = ({
 
       {/* 7. Save to Buy Interactive Explainer & Calculator Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-950/60 via-slate-900 to-slate-950 border border-emerald-800/40 p-8 sm:p-12">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-7 space-y-4">
+        <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-br from-emerald-950/60 via-slate-900 to-slate-950 border border-emerald-800/40 p-5 sm:p-12">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8 items-center">
+            <div className="lg:col-span-7 space-y-3 sm:space-y-4">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
                 <PiggyBank className="w-3.5 h-3.5" />
                 Neo Tech Save to Buy Platform
               </div>
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+              <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
                 Get your dream phone without financial stress.
               </h2>
-              <p className="text-sm text-slate-300 leading-relaxed max-w-xl">
+              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-xl">
                 Inflation shouldn't stop you from owning the latest iPhone or Samsung Galaxy. With Neo Tech's Save to Buy program, your target phone is reserved and protected against sudden market price spikes while you save gradually.
               </p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
-                <div className="p-3.5 rounded-xl bg-slate-900/80 border border-emerald-900/40">
-                  <div className="text-emerald-400 font-extrabold text-xl mb-1">0% Interest</div>
-                  <p className="text-xs text-slate-400">Zero charges, zero hidden fees. Every Naira goes towards your phone.</p>
+              <div className="grid grid-cols-3 gap-2 sm:gap-4 pt-2 sm:pt-4">
+                <div className="min-w-0 p-2 sm:p-3.5 rounded-lg sm:rounded-xl bg-slate-900/80 border border-emerald-900/40">
+                  <div className="text-emerald-400 font-extrabold text-[11px] sm:text-xl leading-tight mb-1">0% Interest</div>
+                  <p className="text-[9px] sm:text-xs text-slate-400 leading-snug">Zero charges, zero hidden fees. Every Naira goes towards your phone.</p>
                 </div>
                 <div className="p-3.5 rounded-xl bg-slate-900/80 border border-emerald-900/40">
                   <div className="text-emerald-400 font-extrabold text-xl mb-1">Price Lock</div>
-                  <p className="text-xs text-slate-400">Your price is frozen the day you start your savings plan.</p>
+                  <p className="text-[9px] sm:text-xs text-slate-400 leading-snug">Your price is frozen the day you start your savings plan.</p>
                 </div>
                 <div className="p-3.5 rounded-xl bg-slate-900/80 border border-emerald-900/40">
                   <div className="text-emerald-400 font-extrabold text-xl mb-1">Fast Pickup</div>
-                  <p className="text-xs text-slate-400">Immediate handover or nationwide delivery once target is reached.</p>
+                  <p className="text-[9px] sm:text-xs text-slate-400 leading-snug">Immediate handover or nationwide delivery once target is reached.</p>
                 </div>
               </div>
 
               <div className="pt-4 flex flex-wrap gap-3">
                 <button
                   onClick={() => onNavigate('save-to-buy')}
-                  className="px-6 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm shadow-xl shadow-emerald-500/30 flex items-center gap-2 transition"
+                  className="px-4 py-2.5 sm:px-6 sm:py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm shadow-xl shadow-emerald-500/30 flex items-center gap-2 transition"
                 >
                   <span>Start a Savings Plan</span>
                   <ArrowRight className="w-4 h-4" />
@@ -304,7 +304,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
             </div>
 
             {/* Savings preview card */}
-            <div className="lg:col-span-5 bg-slate-950/90 rounded-2xl border border-emerald-500/30 p-6 space-y-4 shadow-2xl">
+            <div className="lg:col-span-5 bg-slate-950/90 rounded-xl sm:rounded-2xl border border-emerald-500/30 p-4 sm:p-6 space-y-3 sm:space-y-4 shadow-2xl">
               <div className="flex items-center justify-between border-b border-slate-800 pb-3">
                 <span className="text-xs font-semibold text-slate-400">Sample Savings Plan</span>
                 <span className="text-xs text-emerald-400 font-bold bg-emerald-950 px-2 py-0.5 rounded border border-emerald-800">
@@ -350,21 +350,21 @@ export const HomeView: React.FC<HomeViewProps> = ({
 
       {/* 8. Credably BNPL Feature Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-950/60 via-slate-900 to-slate-950 border border-blue-800/40 p-8 sm:p-12">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-            <div className="space-y-4 max-w-xl">
+        <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-br from-blue-950/60 via-slate-900 to-slate-950 border border-blue-800/40 p-5 sm:p-12">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-5 sm:gap-8">
+            <div className="space-y-3 sm:space-y-4 max-w-xl">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-blue-500/20 text-blue-400 border border-blue-500/30">
                 <CreditCard className="w-3.5 h-3.5" />
                 Credably Buy Now Pay Later
               </div>
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+              <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
                 Take it home today. Spread payments up to 12 months.
               </h2>
-              <p className="text-sm text-slate-300 leading-relaxed">
+              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
                 Apply in under 5 minutes through our official Credably financing workflow. Simply choose your phone, select your preferred repayment tenure, provide your details, and collect your device upon approval.
               </p>
 
-              <div className="flex flex-wrap items-center gap-4 pt-2 text-xs text-slate-300">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-4 pt-1 sm:pt-2 text-[10px] sm:text-xs text-slate-300">
                 <div className="flex items-center gap-1.5">
                   <CheckCircle2 className="w-4 h-4 text-blue-400" />
                   <span>3, 6, 9 & 12 Month Tenures</span>
@@ -382,7 +382,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
               <div className="pt-2">
                 <button
                   onClick={() => onNavigate('bnpl')}
-                  className="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm shadow-xl shadow-blue-600/30 flex items-center gap-2 transition"
+                  className="px-4 py-2.5 sm:px-6 sm:py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm shadow-xl shadow-blue-600/30 flex items-center gap-2 transition"
                 >
                   <span>Explore Credably Financing</span>
                   <ArrowRight className="w-4 h-4" />
@@ -390,11 +390,11 @@ export const HomeView: React.FC<HomeViewProps> = ({
               </div>
             </div>
 
-            <div className="w-full md:w-auto p-6 rounded-2xl bg-slate-950/80 border border-slate-800 text-center space-y-3">
+            <div className="w-full md:w-auto p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-slate-950/80 border border-slate-800 text-center space-y-2 sm:space-y-3">
               <span className="text-xs uppercase tracking-wider text-slate-400 font-semibold">
                 Financing Partner
               </span>
-              <div className="text-2xl font-black text-white tracking-tight">
+              <div className="text-lg sm:text-2xl font-black text-white tracking-tight">
                 CREDABLY <span className="text-blue-400">FINANCING</span>
               </div>
               <p className="text-xs text-slate-400 max-w-xs">
