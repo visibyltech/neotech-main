@@ -72,13 +72,13 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           <div className="flex items-center gap-4 text-[11px]">
             <a
-              href="https://wa.me/2348149024432?text=Hello%20Neo%20Tech%20Gadget%2C%20I%20would%20like%20to%20inquire%20about%20a%20smartphone"
+              href="https://wa.me/2348135933346?text=Hello%20Neo%20Tech%20Gadget%2C%20I%20would%20like%20to%20inquire%20about%20a%20smartphone"
               target="_blank"
               rel="noopener noreferrer"
               className="text-emerald-400 hover:text-emerald-300 font-medium flex items-center gap-1 transition"
             >
               <Phone className="w-3 h-3" />
-              <span>WhatsApp: +234 814 902 4432</span>
+              <span>WhatsApp: +234 813 593 3346</span>
             </a>
 
             {/* Quick Admin Toggle for review/demo */}
