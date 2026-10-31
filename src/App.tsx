@@ -48,15 +48,66 @@ function MainApp() {
     });
   }, []);
 
+  // Keep the device/browser Back button inside the website's view history.
+  useEffect(() => {
+    const initialState = {
+      neoTechApp: true,
+      view: currentView,
+      params: viewParams,
+      productId: selectedProduct?.id || null,
+    };
+    window.history.replaceState(initialState, '', window.location.href);
+
+    const handlePopState = (event: PopStateEvent) => {
+      const state = event.state;
+      if (state?.neoTechApp) {
+        setCurrentView(state.view || 'home');
+        setViewParams(state.params || {});
+        setSelectedProduct(
+          state.productId
+            ? products.find((product) => product.id === state.productId) || null
+            : null
+        );
+      } else {
+        // If the browser reaches the app's entry point, restore the app
+        // instead of leaving the site unexpectedly.
+        window.history.pushState(initialState, '', window.location.href);
+        setCurrentView('home');
+        setViewParams({});
+        setSelectedProduct(null);
+      }
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [products]);
+
   const handleNavigate = (view: string, params: any = {}) => {
+    const nextState = {
+      neoTechApp: true,
+      view,
+      params,
+      productId: null,
+    };
+    window.history.pushState(nextState, '', window.location.href);
     setCurrentView(view);
     setViewParams(params);
+    setSelectedProduct(null);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleOpenProduct = (product: Product) => {
+    const nextState = {
+      neoTechApp: true,
+      view: 'product-detail',
+      params: {},
+      productId: product.id,
+    };
+    window.history.pushState(nextState, '', window.location.href);
     setSelectedProduct(product);
     setCurrentView('product-detail');
+    setViewParams({});
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
