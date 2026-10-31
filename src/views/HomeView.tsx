@@ -55,83 +55,68 @@ export const HomeView: React.FC<HomeViewProps> = ({
         <HeroSlider banners={banners} onNavigate={onNavigate} />
       </section>
 
-      {/* 2. Three Purchasing Methods Highlight Bar */}
+      {/* 2. Compact Three Purchasing Methods */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-3 gap-2 sm:gap-3">
           {/* Option 1: Buy Now / Pay Now */}
-          <div
+          <button
+            type="button"
             onClick={() => onNavigate('products')}
-            className="group relative p-6 rounded-2xl bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 hover:border-red-500/50 cursor-pointer transition shadow-lg"
+            className="group min-w-0 text-left p-2.5 sm:p-4 rounded-xl sm:rounded-2xl bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 hover:border-red-500/50 transition shadow-md"
           >
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-red-400 bg-red-600/10 px-2.5 py-0.5 rounded-full border border-red-500/30">
-                Option 1 • Instant
-              </span>
-              <span className="text-xs text-slate-500 group-hover:text-red-400 transition flex items-center gap-1">
-                Explore <ArrowRight className="w-3 h-3" />
-              </span>
-            </div>
-            <h3 className="text-lg font-bold text-white mb-1 group-hover:text-red-400 transition">
-              Buy Now / Pay Now
+            <span className="inline-flex text-[8px] sm:text-[10px] font-bold uppercase tracking-wide text-red-400 bg-red-600/10 px-1.5 py-1 rounded-md border border-red-500/30 mb-2">
+              01 • Instant
+            </span>
+            <h3 className="text-[11px] sm:text-sm font-bold leading-tight text-white mb-1.5 group-hover:text-red-400 transition">
+              Buy Now
             </h3>
-            <p className="text-xs text-slate-400 leading-relaxed mb-4">
-              Instant checkout via verified bank transfer or online gateway. Same-day dispatch in Lagos & fast interstate delivery.
+            <p className="text-[9px] sm:text-xs text-slate-400 leading-snug min-h-[30px]">
+              Pay in full. Get it fast.
             </p>
-            <div className="text-[11px] text-slate-300 font-medium flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-red-500"></span>
-              Immediate dispatch • Store pickup in Ikeja
-            </div>
-          </div>
+            <span className="mt-2 inline-flex items-center gap-1 text-[9px] sm:text-[11px] font-semibold text-slate-300 group-hover:text-red-400">
+              Shop <ArrowRight className="w-3 h-3" />
+            </span>
+          </button>
 
           {/* Option 2: Save to Buy */}
-          <div
+          <button
+            type="button"
             onClick={() => onNavigate('save-to-buy')}
-            className="group relative p-6 rounded-2xl bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 hover:border-emerald-500/50 cursor-pointer transition shadow-lg"
+            className="group min-w-0 text-left p-2.5 sm:p-4 rounded-xl sm:rounded-2xl bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 hover:border-emerald-500/50 transition shadow-md"
           >
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-600/10 px-2.5 py-0.5 rounded-full border border-emerald-500/30">
-                Option 2 • Smart Savings
-              </span>
-              <span className="text-xs text-slate-500 group-hover:text-emerald-400 transition flex items-center gap-1">
-                Calculate <ArrowRight className="w-3 h-3" />
-              </span>
-            </div>
-            <h3 className="text-lg font-bold text-white mb-1 group-hover:text-emerald-400 transition">
-              Save to Buy Plan
+            <span className="inline-flex text-[8px] sm:text-[10px] font-bold uppercase tracking-wide text-emerald-400 bg-emerald-600/10 px-1.5 py-1 rounded-md border border-emerald-500/30 mb-2">
+              02 • Savings
+            </span>
+            <h3 className="text-[11px] sm:text-sm font-bold leading-tight text-white mb-1.5 group-hover:text-emerald-400 transition">
+              Save to Buy
             </h3>
-            <p className="text-xs text-slate-400 leading-relaxed mb-4">
-              Pay small-small daily, weekly, or monthly towards your desired phone. 0% interest, price lock protection, transparent tracking.
+            <p className="text-[9px] sm:text-xs text-slate-400 leading-snug min-h-[30px]">
+              Save bit by bit.
             </p>
-            <div className="text-[11px] text-slate-300 font-medium flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-              Flexible duration • Collect on 100% completion
-            </div>
-          </div>
+            <span className="mt-2 inline-flex items-center gap-1 text-[9px] sm:text-[11px] font-semibold text-slate-300 group-hover:text-emerald-400">
+              Plan <ArrowRight className="w-3 h-3" />
+            </span>
+          </button>
 
           {/* Option 3: Credably BNPL */}
-          <div
+          <button
+            type="button"
             onClick={() => onNavigate('bnpl')}
-            className="group relative p-6 rounded-2xl bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 hover:border-blue-500/50 cursor-pointer transition shadow-lg"
+            className="group min-w-0 text-left p-2.5 sm:p-4 rounded-xl sm:rounded-2xl bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 hover:border-blue-500/50 transition shadow-md"
           >
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-blue-400 bg-blue-600/10 px-2.5 py-0.5 rounded-full border border-blue-500/30">
-                Option 3 • Financing
-              </span>
-              <span className="text-xs text-slate-500 group-hover:text-blue-400 transition flex items-center gap-1">
-                Apply Now <ArrowRight className="w-3 h-3" />
-              </span>
-            </div>
-            <h3 className="text-lg font-bold text-white mb-1 group-hover:text-blue-400 transition">
+            <span className="inline-flex text-[8px] sm:text-[10px] font-bold uppercase tracking-wide text-blue-400 bg-blue-600/10 px-1.5 py-1 rounded-md border border-blue-500/30 mb-2">
+              03 • Finance
+            </span>
+            <h3 className="text-[11px] sm:text-sm font-bold leading-tight text-white mb-1.5 group-hover:text-blue-400 transition">
               Credably BNPL
             </h3>
-            <p className="text-xs text-slate-400 leading-relaxed mb-4">
-              Financing powered by Credably. Spread repayments across 3 to 12 months with low initial deposit and fast credit decisions.
+            <p className="text-[9px] sm:text-xs text-slate-400 leading-snug min-h-[30px]">
+              Pay over 3–12 months.
             </p>
-            <div className="text-[11px] text-slate-300 font-medium flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
-              3-12 months tenure • Instant pre-qualification
-            </div>
-          </div>
+            <span className="mt-2 inline-flex items-center gap-1 text-[9px] sm:text-[11px] font-semibold text-slate-300 group-hover:text-blue-400">
+              Apply <ArrowRight className="w-3 h-3" />
+            </span>
+          </button>
         </div>
       </section>
 
