@@ -270,7 +270,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 <PiggyBank className="w-3.5 h-3.5" />
                 Neo Tech Save to Buy Platform
               </div>
-              <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
+              <h2 className="text-lg sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
                 Get your dream phone without financial stress.
               </h2>
               <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-xl">
@@ -282,12 +282,12 @@ export const HomeView: React.FC<HomeViewProps> = ({
                   <div className="text-emerald-400 font-extrabold text-[11px] sm:text-xl leading-tight mb-1">0% Interest</div>
                   <p className="text-[9px] sm:text-xs text-slate-400 leading-snug">Zero charges, zero hidden fees. Every Naira goes towards your phone.</p>
                 </div>
-                <div className="p-3.5 rounded-xl bg-slate-900/80 border border-emerald-900/40">
-                  <div className="text-emerald-400 font-extrabold text-xl mb-1">Price Lock</div>
+                <div className="min-w-0 p-2 sm:p-3.5 rounded-lg sm:rounded-xl bg-slate-900/80 border border-emerald-900/40">
+                  <div className="text-emerald-400 font-extrabold text-[11px] sm:text-xl leading-tight mb-1">Price Lock</div>
                   <p className="text-[9px] sm:text-xs text-slate-400 leading-snug">Your price is frozen the day you start your savings plan.</p>
                 </div>
                 <div className="p-3.5 rounded-xl bg-slate-900/80 border border-emerald-900/40">
-                  <div className="text-emerald-400 font-extrabold text-xl mb-1">Fast Pickup</div>
+                  <div className="text-emerald-400 font-extrabold text-[11px] sm:text-xl leading-tight mb-1">Fast Pickup</div>
                   <p className="text-[9px] sm:text-xs text-slate-400 leading-snug">Immediate handover or nationwide delivery once target is reached.</p>
                 </div>
               </div>
@@ -350,21 +350,21 @@ export const HomeView: React.FC<HomeViewProps> = ({
 
       {/* 8. Credably BNPL Feature Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-br from-blue-950/60 via-slate-900 to-slate-950 border border-blue-800/40 p-5 sm:p-12">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-5 sm:gap-8">
-            <div className="space-y-3 sm:space-y-4 max-w-xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-blue-500/20 text-blue-400 border border-blue-500/30">
+        <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-br from-blue-950/60 via-slate-900 to-slate-950 border border-blue-800/40 p-3 sm:p-12">
+          <div className="flex flex-row items-start justify-between gap-2 sm:gap-8">
+            <div className="min-w-0 flex-1 space-y-2 sm:space-y-4 max-w-xl">
+              <div className="inline-flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1 rounded-full text-[8px] sm:text-xs font-bold uppercase tracking-wider bg-blue-500/20 text-blue-400 border border-blue-500/30">
                 <CreditCard className="w-3.5 h-3.5" />
                 Credably Buy Now Pay Later
               </div>
               <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
                 Take it home today. Spread payments up to 12 months.
               </h2>
-              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              <p className="text-[10px] sm:text-sm text-slate-300 leading-snug sm:leading-relaxed">
                 Apply in under 5 minutes through our official Credably financing workflow. Simply choose your phone, select your preferred repayment tenure, provide your details, and collect your device upon approval.
               </p>
 
-              <div className="flex flex-wrap items-center gap-2 sm:gap-4 pt-1 sm:pt-2 text-[10px] sm:text-xs text-slate-300">
+              <div className="flex flex-col sm:flex-row flex-wrap items-start gap-1 sm:gap-4 pt-1 sm:pt-2 text-[9px] sm:text-xs text-slate-300">
                 <div className="flex items-center gap-1.5">
                   <CheckCircle2 className="w-4 h-4 text-blue-400" />
                   <span>3, 6, 9 & 12 Month Tenures</span>
@@ -390,14 +390,14 @@ export const HomeView: React.FC<HomeViewProps> = ({
               </div>
             </div>
 
-            <div className="w-full md:w-auto p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-slate-950/80 border border-slate-800 text-center space-y-2 sm:space-y-3">
-              <span className="text-xs uppercase tracking-wider text-slate-400 font-semibold">
+            <div className="w-[38%] shrink-0 p-2 sm:p-6 rounded-lg sm:rounded-2xl bg-slate-950/80 border border-slate-800 text-center space-y-1 sm:space-y-3">
+              <span className="text-[8px] sm:text-xs uppercase tracking-wider text-slate-400 font-semibold">
                 Financing Partner
               </span>
-              <div className="text-lg sm:text-2xl font-black text-white tracking-tight">
+              <div className="text-[10px] sm:text-2xl font-black text-white tracking-tight leading-tight">
                 CREDABLY <span className="text-blue-400">FINANCING</span>
               </div>
-              <p className="text-xs text-slate-400 max-w-xs">
+              <p className="text-[8px] sm:text-xs text-slate-400 max-w-xs leading-snug">
                 Underwritten by licensed lending providers in Nigeria. Direct API verification and secure disbursements.
               </p>
             </div>
