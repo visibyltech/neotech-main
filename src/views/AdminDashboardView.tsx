@@ -973,6 +973,18 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                     className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white"
                   />
                 </div>
+                <div className="sm:col-span-2">
+                  <label className="block text-slate-400 mb-1">Official Business Address</label>
+                  <textarea
+                    rows={2}
+                    value={settingsForm.contactInfo.address}
+                    onChange={(e) => setSettingsForm({
+                      ...settingsForm,
+                      contactInfo: { ...settingsForm.contactInfo, address: e.target.value },
+                    })}
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white"
+                  />
+                </div>
               </div>
             </div>
 
