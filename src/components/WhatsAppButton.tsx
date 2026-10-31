@@ -6,7 +6,7 @@ interface WhatsAppButtonProps {
 }
 
 export const WhatsAppButton: React.FC<WhatsAppButtonProps> = ({
-  whatsappNumber = '2348149024432',
+  whatsappNumber = '2348135933346',
 }) => {
   const [showTooltip, setShowTooltip] = useState(false);
 
