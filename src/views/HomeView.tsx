@@ -286,7 +286,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                   <div className="text-emerald-400 font-extrabold text-[11px] sm:text-xl leading-tight mb-1">Price Lock</div>
                   <p className="text-[9px] sm:text-xs text-slate-400 leading-snug">Your price is frozen the day you start your savings plan.</p>
                 </div>
-                <div className="p-3.5 rounded-xl bg-slate-900/80 border border-emerald-900/40">
+                <div className="min-w-0 p-2 sm:p-3.5 rounded-lg sm:rounded-xl bg-slate-900/80 border border-emerald-900/40">
                   <div className="text-emerald-400 font-extrabold text-[11px] sm:text-xl leading-tight mb-1">Fast Pickup</div>
                   <p className="text-[9px] sm:text-xs text-slate-400 leading-snug">Immediate handover or nationwide delivery once target is reached.</p>
                 </div>
