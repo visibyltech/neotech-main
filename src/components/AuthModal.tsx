@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { X, Mail, Lock, User, Phone, ShieldCheck, ArrowRight, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { X, Mail, Lock, User, Phone, ArrowRight, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { authService } from '../services/authService';
 
 export const AuthModal: React.FC = () => {
-  const { isAuthModalOpen, authModalMode, closeAuthModal, openAuthModal, simulateAdminMode } = useAuth();
+  const { isAuthModalOpen, authModalMode, closeAuthModal, openAuthModal } = useAuth();
 
   const [mode, setMode] = useState<'login' | 'register' | 'forgot'>(authModalMode);
   const [email, setEmail] = useState('');
@@ -72,11 +72,6 @@ export const AuthModal: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleFastAdminLogin = () => {
-    simulateAdminMode(true);
-    closeAuthModal();
   };
 
   return (
@@ -297,20 +292,7 @@ export const AuthModal: React.FC = () => {
           )}
         </div>
 
-        {/* Fast Admin Demo Access */}
-        <div className="mt-4 p-2.5 rounded-xl bg-red-950/20 border border-red-900/30 text-center">
-          <p className="text-[10px] text-slate-400 mb-1.5">
-            Admin testing as <span className="text-red-400 font-mono">usitakatelvin@gmail.com</span>:
-          </p>
-          <button
-            type="button"
-            onClick={handleFastAdminLogin}
-            className="w-full py-1.5 px-3 rounded-lg bg-slate-800 hover:bg-slate-700 text-red-400 hover:text-red-300 text-xs font-semibold border border-red-500/30 flex items-center justify-center gap-1.5 transition"
-          >
-            <ShieldCheck className="w-3.5 h-3.5" />
-            <span>Launch Admin Dashboard Instantly</span>
-          </button>
-        </div>
+
       </div>
     </div>
   );
