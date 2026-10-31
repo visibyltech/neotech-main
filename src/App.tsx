@@ -50,6 +50,7 @@ function MainApp() {
 
   // Keep the device/browser Back button inside the website's view history.
   useEffect(() => {
+    const appEntryUrl = window.location.href;
     const initialState = {
       neoTechApp: true,
       view: currentView,
@@ -71,7 +72,7 @@ function MainApp() {
       } else {
         // If the browser reaches the app's entry point, restore the app
         // instead of leaving the site unexpectedly.
-        window.history.pushState(initialState, '', window.location.href);
+        window.history.pushState(initialState, '', appEntryUrl);
         setCurrentView('home');
         setViewParams({});
         setSelectedProduct(null);
