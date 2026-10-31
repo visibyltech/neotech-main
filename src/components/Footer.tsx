@@ -103,11 +103,11 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <div className="pt-2 text-xs space-y-2">
               <div className="flex items-center gap-2 text-slate-300">
                 <MapPin className="w-4 h-4 text-red-500 shrink-0" />
-                <span>Suite B4, Tech Plaza, Otigba St, Computer Village, Ikeja, Lagos</span>
+                <span>SHOP C38, ROBINSON PLAZA, DECO ROAD, WARRI, DELTA STATE, NIGERIA</span>
               </div>
               <div className="flex items-center gap-2 text-slate-300">
                 <Phone className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>+234 814 902 4432 / +234 814 902 4433</span>
+                <a href="tel:+2348135933346" className="hover:text-white transition">+234 813 593 3346</a>
               </div>
               <div className="flex items-center gap-2 text-slate-300">
                 <Mail className="w-4 h-4 text-cyan-400 shrink-0" />
@@ -231,7 +231,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <span>•</span>
             <span>Credably Financing Partner</span>
             <span>•</span>
-            <span>Lagos, Nigeria</span>
+            <span>Warri, Delta State, Nigeria</span>
           </div>
         </div>
       </div>
