@@ -5,10 +5,6 @@ import {
   Mail,
   MapPin,
   Clock,
-  ShieldCheck,
-  Truck,
-  CreditCard,
-  PiggyBank,
   CheckCircle2,
 } from 'lucide-react';
 
@@ -21,56 +17,6 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 
   return (
     <footer className="bg-slate-950 border-t border-slate-800 text-slate-400 text-sm">
-      {/* 3 Core Value Pillars */}
-      <div className="border-b border-slate-900 bg-slate-900/40 py-10 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Pillar 1 */}
-          <div className="flex items-start gap-4 p-5 rounded-2xl bg-slate-900/60 border border-slate-800/80">
-            <div className="w-12 h-12 rounded-xl bg-red-600/10 border border-red-500/30 flex items-center justify-center text-red-500 shrink-0">
-              <ShieldCheck className="w-6 h-6" />
-            </div>
-            <div>
-              <h4 className="text-white font-bold text-base mb-1">100% Genuine & Inspected</h4>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                Brand-new sealed devices with official warranties. UK-used iPhones rigorously tested for battery health, Face ID, and factory unlock.
-              </p>
-            </div>
-          </div>
-
-          {/* Pillar 2 */}
-          <div
-            onClick={() => onNavigate('save-to-buy')}
-            className="flex items-start gap-4 p-5 rounded-2xl bg-slate-900/60 border border-slate-800/80 hover:border-emerald-500/40 cursor-pointer transition"
-          >
-            <div className="w-12 h-12 rounded-xl bg-emerald-600/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0">
-              <PiggyBank className="w-6 h-6" />
-            </div>
-            <div>
-              <h4 className="text-white font-bold text-base mb-1">Save to Buy Program</h4>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                Save daily, weekly, or monthly at your own pace. Lock in phone prices, prevent inflation impact, and collect upon target completion.
-              </p>
-            </div>
-          </div>
-
-          {/* Pillar 3 */}
-          <div
-            onClick={() => onNavigate('bnpl')}
-            className="flex items-start gap-4 p-5 rounded-2xl bg-slate-900/60 border border-slate-800/80 hover:border-blue-500/40 cursor-pointer transition"
-          >
-            <div className="w-12 h-12 rounded-xl bg-blue-600/10 border border-blue-500/30 flex items-center justify-center text-blue-400 shrink-0">
-              <CreditCard className="w-6 h-6" />
-            </div>
-            <div>
-              <h4 className="text-white font-bold text-base mb-1">Credably BNPL Financing</h4>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                Own the smartphone of your dreams today and spread payments comfortably over 3 to 12 months with Credably instant approvals.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Main Footer Links */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
