@@ -7,7 +7,6 @@ import {
   ShieldCheck,
   Menu,
   X,
-  Phone,
   Sparkles,
   Smartphone,
   Layers,
