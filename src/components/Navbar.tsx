@@ -71,16 +71,6 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           <div className="flex items-center gap-4 text-[11px]">
-            <a
-              href="https://wa.me/2348135933346?text=Hello%20Neo%20Tech%20Gadget%2C%20I%20would%20like%20to%20inquire%20about%20a%20smartphone"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-emerald-400 hover:text-emerald-300 font-medium flex items-center gap-1 transition"
-            >
-              <Phone className="w-3 h-3" />
-              <span>WhatsApp: +234 813 593 3346</span>
-            </a>
-
             {/* Quick Admin Toggle for review/demo */}
             <button
               onClick={() => simulateAdminMode(!isAdmin)}
@@ -207,10 +197,11 @@ export const Navbar: React.FC<NavbarProps> = ({
               ) : (
                 <button
                   onClick={() => openAuthModal('login')}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-red-600 hover:bg-red-500 text-white text-xs sm:text-sm font-semibold shadow-md shadow-red-600/30 transition"
+                  className="flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-slate-900 border border-slate-700 text-slate-200 hover:text-white hover:border-red-500 hover:bg-red-600/10 transition"
+                  title="Sign in or open your profile"
+                  aria-label="Profile"
                 >
-                  <User className="w-4 h-4" />
-                  <span>Sign In</span>
+                  <User className="w-5 h-5" />
                 </button>
               )}
 
