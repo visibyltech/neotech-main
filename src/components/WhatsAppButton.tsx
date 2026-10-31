@@ -17,7 +17,7 @@ export const WhatsAppButton: React.FC<WhatsAppButtonProps> = ({
   const waUrl = `https://wa.me/${cleanNumber}?text=${defaultMessage}`;
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex items-end flex-col select-none">
+    <div className="fixed bottom-[calc(5.5rem+env(safe-area-inset-bottom))] right-4 sm:right-6 z-[60] flex items-end flex-col select-none pointer-events-none [&>*]:pointer-events-auto">
       {/* Tooltip greeting */}
       {showTooltip && (
         <div className="mb-2 p-3 rounded-2xl bg-slate-900 border border-emerald-500/40 text-white text-xs shadow-2xl max-w-xs animate-in fade-in slide-in-from-bottom-2 relative">
@@ -43,7 +43,7 @@ export const WhatsAppButton: React.FC<WhatsAppButtonProps> = ({
         target="_blank"
         rel="noopener noreferrer"
         onMouseEnter={() => setShowTooltip(true)}
-        className="group relative flex items-center justify-center w-14 h-14 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-xl shadow-emerald-500/30 hover:scale-105 active:scale-95 transition-all"
+        className="group relative flex items-center justify-center w-14 h-14 sm:w-14 sm:h-14 rounded-full border-2 border-slate-950/80 bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-xl shadow-emerald-500/30 hover:scale-105 active:scale-95 transition-all"
         title="Chat with Neo Tech Gadget on WhatsApp"
       >
         <span className="absolute -inset-1 rounded-full bg-emerald-500/40 animate-ping opacity-40"></span>
