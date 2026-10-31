@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, ArrowRight, Sparkles, Shield, PiggyBank, CreditCard } from 'lucide-react';
+import { ArrowRight, Sparkles, Shield, PiggyBank, CreditCard } from 'lucide-react';
 import { Banner } from '../types';
 
 interface HeroSliderProps {
@@ -22,14 +22,6 @@ export const HeroSlider: React.FC<HeroSliderProps> = ({ banners, onNavigate }) =
   if (activeBanners.length === 0) return null;
 
   const current = activeBanners[currentIndex];
-
-  const handleNext = () => {
-    setCurrentIndex(prev => (prev + 1) % activeBanners.length);
-  };
-
-  const handlePrev = () => {
-    setCurrentIndex(prev => (prev - 1 + activeBanners.length) % activeBanners.length);
-  };
 
   return (
     <div className="relative w-full overflow-hidden rounded-3xl bg-slate-950 border border-slate-800/80 shadow-2xl">
@@ -92,26 +84,6 @@ export const HeroSlider: React.FC<HeroSliderProps> = ({ banners, onNavigate }) =
             </button>
           </div>
         </div>
-
-        {/* Carousel arrows */}
-        {activeBanners.length > 1 && (
-          <>
-            <button
-              onClick={handlePrev}
-              className="absolute left-4 z-20 p-2.5 rounded-full bg-slate-900/70 hover:bg-slate-800 text-white border border-slate-700 backdrop-blur-md transition"
-              aria-label="Previous Slide"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <button
-              onClick={handleNext}
-              className="absolute right-4 z-20 p-2.5 rounded-full bg-slate-900/70 hover:bg-slate-800 text-white border border-slate-700 backdrop-blur-md transition"
-              aria-label="Next Slide"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
-          </>
-        )}
 
         {/* Indicator dots */}
         {activeBanners.length > 1 && (
