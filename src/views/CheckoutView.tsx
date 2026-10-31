@@ -148,7 +148,7 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({ onNavigate, onOpenRe
           fullAddress: fullAddress.trim(),
           instructions: deliveryInstructions.trim(),
         } : undefined,
-        pickupLocationId: fulfillmentType === 'pickup' ? 'ikeja-hub' : undefined,
+        pickupLocationId: fulfillmentType === 'pickup' ? 'warri-store' : undefined,
         paymentMethod: paymentMethod === 'credably-bnpl' ? 'credably-bnpl' : 'pay-now',
         proofOfPaymentUrl: uploadedProofUrl,
         paymentReference: `NTG-REF-${Math.floor(100000 + Math.random() * 900000)}`,
@@ -214,7 +214,7 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({ onNavigate, onOpenRe
             <span className="font-medium text-white capitalize">
               {completedOrder.fulfillmentType === 'delivery'
                 ? `Delivery to ${completedOrder.deliveryAddress?.state}`
-                : 'Store Pickup in Computer Village Ikeja'}
+                : 'Store Pickup in Warri, Delta State'}
             </span>
           </div>
         </div>
@@ -393,10 +393,10 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({ onNavigate, onOpenRe
               <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-2 text-xs">
                 <div className="flex items-center gap-2 text-white font-bold">
                   <Store className="w-4 h-4 text-emerald-400" />
-                  <span>Neo Tech Gadget Ikeja Experience Center</span>
+                  <span>Neo Tech Gadget — Robinson Plaza Store</span>
                 </div>
                 <p className="text-slate-400">
-                  Suite B4, Tech Plaza, Otigba Street, Computer Village, Ikeja, Lagos
+                  SHOP C38, ROBINSON PLAZA, DECO ROAD, WARRI, DELTA STATE, NIGERIA
                 </p>
                 <p className="text-[11px] text-emerald-400 font-semibold">
                   ✓ Ready for collection 2 hours after payment verification.
