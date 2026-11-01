@@ -7,7 +7,6 @@ import {
   CreditCard,
   Truck,
   ArrowRight,
-  BatteryCharging,
   Layers,
   CheckCircle2,
   Lock,
@@ -188,20 +187,20 @@ export const HomeView: React.FC<HomeViewProps> = ({
         </div>
       </section>
 
-      {/* 5. UK-Used iPhones Showcase (With Battery Health focus) */}
+      {/* 5. UK-Used iPhones Showcase */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-slate-900 via-slate-950 to-slate-900 border border-slate-800">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
             <div>
               <div className="flex items-center gap-2 text-amber-400 text-xs font-bold uppercase tracking-wider mb-1">
-                <BatteryCharging className="w-4 h-4" />
-                Verified Battery Health & Face ID
+                <ShieldCheck className="w-4 h-4" />
+                Quality-Checked UK Imports
               </div>
               <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
                 Pristine UK-Used iPhones
               </h2>
               <p className="text-xs sm:text-sm text-slate-400 max-w-xl mt-1">
-                Direct UK imports tested on 42 hardware inspection points. No refurbished parts, original screens, and guaranteed battery health 85%+.
+                Direct UK imports checked across key hardware functions, with original screens and verified device condition.
               </p>
             </div>
             <button
@@ -352,11 +351,11 @@ export const HomeView: React.FC<HomeViewProps> = ({
 
           <div className="min-w-0 p-3 sm:p-5 rounded-xl sm:rounded-2xl bg-slate-900 border border-slate-800 text-center space-y-1.5 sm:space-y-2">
             <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-cyan-600/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mx-auto">
-              <BatteryCharging className="w-4 h-4 sm:w-6 h-6" />
+              <ShieldCheck className="w-4 h-4 sm:w-6 h-6" />
             </div>
-            <h4 className="font-bold text-white text-[11px] sm:text-sm leading-tight">Tested Battery Health</h4>
+            <h4 className="font-bold text-white text-[11px] sm:text-sm leading-tight">Quality-Checked Devices</h4>
             <p className="text-[10px] sm:text-xs text-slate-400 leading-snug sm:leading-relaxed">
-              All UK-used iPhones have verified battery health and original Apple displays.
+              UK-used devices are inspected for condition and key hardware functions before listing.
             </p>
           </div>
 
