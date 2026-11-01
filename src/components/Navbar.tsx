@@ -449,7 +449,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             >
               Customer Dashboard
             </button>
-            {isAdmin && (
+            {canAccessAdminPortal && (
               <button
                 onClick={() => handleNavClick('admin')}
                 className="w-full text-left px-3 py-2 text-sm font-semibold text-red-400 bg-red-950/30 rounded-lg"
