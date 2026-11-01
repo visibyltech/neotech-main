@@ -1,6 +1,9 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { CartItem, Product, FulfillmentType } from '../types';
 
+export interface DeliveryDetails { recipientName: string; recipientPhone: string; lga: string; fullAddress: string; instructions: string; }
+const EMPTY_DELIVERY_DETAILS: DeliveryDetails = { recipientName: '', recipientPhone: '', lga: '', fullAddress: '', instructions: '' };
+
 interface CartContextType {
   items: CartItem[];
   addToCart: (product: Product, quantity?: number, color?: string, storage?: string) => { success: boolean; message?: string };
@@ -13,11 +16,14 @@ interface CartContextType {
   setFulfillmentType: (type: FulfillmentType) => void;
   selectedState: string;
   setSelectedState: (state: string) => void;
+  deliveryDetails: DeliveryDetails;
+  setDeliveryDetails: (details: DeliveryDetails) => void;
   deliveryFee: number;
   totalPrice: number;
 }
 
 const STORAGE_KEY = 'neotech_cart_v1';
+const DELIVERY_DETAILS_KEY = 'neotech_delivery_details_v1';
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
@@ -33,6 +39,10 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const [fulfillmentType, setFulfillmentType] = useState<FulfillmentType>('delivery');
   const [selectedState, setSelectedState] = useState<string>('Lagos Mainland');
+  const [deliveryDetails, setDeliveryDetails] = useState<DeliveryDetails>(() => {
+    try { const saved = localStorage.getItem(DELIVERY_DETAILS_KEY); return saved ? { ...EMPTY_DELIVERY_DETAILS, ...JSON.parse(saved) } : EMPTY_DELIVERY_DETAILS; }
+    catch { return EMPTY_DELIVERY_DETAILS; }
+  });
 
   // Save cart changes
   useEffect(() => {
@@ -42,6 +52,10 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       console.error('Failed to save cart:', e);
     }
   }, [items]);
+
+  useEffect(() => {
+    try { localStorage.setItem(DELIVERY_DETAILS_KEY, JSON.stringify(deliveryDetails)); } catch (e) { console.error('Failed to save delivery details:', e); }
+  }, [deliveryDetails]);
 
   const addToCart = (product: Product, quantity = 1, color?: string, storage?: string) => {
     const selectedColor = color || product.colors[0] || 'Default';
@@ -153,6 +167,8 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setFulfillmentType,
         selectedState,
         setSelectedState,
+        deliveryDetails,
+        setDeliveryDetails,
         deliveryFee,
         totalPrice,
       }}
