@@ -378,9 +378,9 @@ export const INITIAL_BANNERS: Banner[] = [
 
 export const INITIAL_SETTINGS: BusinessSettings = {
   bankDetails: {
-    bankName: 'Access Bank PLC',
-    accountName: 'NEO TECH GADGET RETAIL NIG LTD',
-    accountNumber: '1849302194',
+    bankName: 'Premium Trust',
+    accountName: 'NEOTECHGADGET',
+    accountNumber: '0040250513',
     instructions: 'Include your Order Reference or Savings Plan ID as narration. Upload transfer receipt for rapid verification.',
   },
   contactInfo: {
