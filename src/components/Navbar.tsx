@@ -4,6 +4,7 @@ import {
   ShoppingCart,
   Heart,
   User,
+  ShieldCheck,
   Menu,
   X,
   Sparkles,
