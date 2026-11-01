@@ -1,14 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import {
   PiggyBank,
-  CheckCircle2,
-  Calendar,
-  ShieldCheck,
   ArrowRight,
-  TrendingUp,
   Lock,
-  ChevronDown,
-  Sparkles,
   Building,
   Upload,
   Copy,
