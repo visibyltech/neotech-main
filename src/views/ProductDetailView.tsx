@@ -2,17 +2,10 @@ import React, { useState } from 'react';
 import {
   Heart,
   ShoppingCart,
-  ShieldCheck,
   BatteryCharging,
-  Cpu,
   CheckCircle2,
-  Share2,
   ArrowLeft,
-  Truck,
-  RotateCcw,
-  Sparkles,
   Zap,
-  Info,
   Maximize2,
   X,
 } from 'lucide-react';
@@ -309,9 +302,9 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
         </div>
       </div>
 
-      {/* Specifications Table & Policies */}
+      {/* Technical Specifications */}
       <div className="grid grid-cols-1 gap-8 pt-8 border-t border-slate-800">
-        <div className="md:col-span-8 space-y-4">
+        <div className="space-y-4">
           <h3 className="text-xl font-bold text-white tracking-tight">Technical Specifications</h3>
           <div className="divide-y divide-slate-800 rounded-2xl bg-slate-900/60 border border-slate-800 overflow-hidden text-xs">
             {Object.entries(product.specifications || {}).map(([key, val]) => (
