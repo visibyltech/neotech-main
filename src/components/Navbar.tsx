@@ -4,7 +4,6 @@ import {
   ShoppingCart,
   Heart,
   User,
-  ShieldCheck,
   Menu,
   X,
   Sparkles,
@@ -35,7 +34,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   searchQuery,
   onSearchChange,
 }) => {
-  const { firebaseUser, profile, isAdmin, openAuthModal, logout, simulateAdminMode } = useAuth();
+  const { firebaseUser, profile, isAdmin, openAuthModal, logout } = useAuth();
   const { totalItems } = useCart();
   const { wishlist } = useWishlist();
 
@@ -69,21 +68,6 @@ export const Navbar: React.FC<NavbarProps> = ({
             </span>
           </div>
 
-          <div className="flex items-center gap-4 text-[11px]">
-            {/* Quick Admin Toggle for review/demo */}
-            <button
-              onClick={() => simulateAdminMode(!isAdmin)}
-              title="Toggle Admin View for Testing"
-              className={`hidden md:flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono border transition ${
-                isAdmin
-                  ? 'bg-red-500/20 text-red-300 border-red-500/50'
-                  : 'bg-slate-800 text-slate-400 border-slate-700 hover:text-white'
-              }`}
-            >
-              <ShieldCheck className="w-3 h-3" />
-              {isAdmin ? 'Admin Mode (Active)' : 'Test Admin'}
-            </button>
-          </div>
         </div>
       </div>
 
