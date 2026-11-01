@@ -1,5 +1,5 @@
 import React from 'react';
-import { Heart, ShoppingCart, BatteryCharging, Shield, Check, Sparkles, PiggyBank, CreditCard } from 'lucide-react';
+import { Heart, ShoppingCart, BatteryCharging, PiggyBank } from 'lucide-react';
 import { Product } from '../types';
 import { formatNaira } from '../utils/formatters';
 import { useCart } from '../context/CartContext';
@@ -23,11 +23,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
   const isLiked = wishlist.includes(product.id);
   const isOutOfStock = product.stock <= 0;
-
-  // BNPL estimate (12 months approx, 20% down, 3.5% monthly)
-  const bnplEstimatedMonthly = Math.round((product.price * 0.8 * (1 + 0.035 * 6)) / 6);
-  // Save to Buy estimate (12 weeks)
-  const saveWeeklyEstimate = Math.ceil(product.price / 12);
 
   const discountPercent = product.previousPrice && product.previousPrice > product.price
     ? Math.round(((product.previousPrice - product.price) / product.previousPrice) * 100)
@@ -134,29 +129,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                 {formatNaira(product.previousPrice)}
               </span>
             )}
-          </div>
-
-          {/* 3 Ways to Purchase Badges */}
-          <div className="space-y-1 mb-4 text-[10px]">
-            <div className="flex items-center justify-between px-2 py-1 rounded bg-slate-950/60 border border-slate-800 text-slate-300">
-              <span className="flex items-center gap-1 text-slate-400">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                Save to Buy:
-              </span>
-              <span className="font-semibold text-emerald-400">
-                from {formatNaira(saveWeeklyEstimate)}/wk
-              </span>
-            </div>
-
-            <div className="flex items-center justify-between px-2 py-1 rounded bg-slate-950/60 border border-slate-800 text-slate-300">
-              <span className="flex items-center gap-1 text-slate-400">
-                <CreditCard className="w-3 h-3 text-blue-400" />
-                Credably BNPL:
-              </span>
-              <span className="font-semibold text-blue-400">
-                from {formatNaira(bnplEstimatedMonthly)}/mo
-              </span>
-            </div>
           </div>
 
           {/* Action Row */}
