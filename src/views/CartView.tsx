@@ -220,6 +220,7 @@ export const CartView: React.FC<CartViewProps> = ({ onNavigate, onOpenProduct })
 
             {/* Nigerian State selector if delivery */}
             {fulfillmentType === 'delivery' ? (
+              <>
               <div className="space-y-1.5">
                 <label className="block text-xs font-semibold text-slate-300">
                   Select Delivery State:
@@ -246,6 +247,7 @@ export const CartView: React.FC<CartViewProps> = ({ onNavigate, onOpenProduct })
                 <div className="space-y-1"><label className="block text-xs font-medium text-slate-300">Full Street Address *</label><textarea rows={3} value={deliveryDetails.fullAddress} onChange={e => updateDeliveryField('fullAddress', e.target.value)} placeholder="House number, street, estate, area and nearby landmark" className="w-full resize-y rounded-xl border border-slate-700 bg-slate-900 px-3 py-2.5 text-sm text-white outline-none focus:border-red-500" /></div>
                 <div className="space-y-1"><label className="block text-xs font-medium text-slate-300">Delivery Instructions (Optional)</label><textarea rows={2} value={deliveryDetails.instructions} onChange={e => updateDeliveryField('instructions', e.target.value)} placeholder="Landmark, gate instructions or preferred delivery time" className="w-full resize-y rounded-xl border border-slate-700 bg-slate-900 px-3 py-2.5 text-sm text-white outline-none focus:border-red-500" /></div>
               </div>
+              </>
             ) : (
               <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-300 space-y-1">
                 <span className="font-bold text-white flex items-center gap-1">
