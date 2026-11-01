@@ -55,7 +55,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
   onNavigate,
   onOpenReceipt,
 }) => {
-  const { firebaseUser, profile, simulateAdminMode } = useAuth();
+  const { firebaseUser, isAdmin } = useAuth();
 
   const [activeSection, setActiveSection] = useState<
     'overview' | 'products' | 'orders' | 'payments' | 'bnpl' | 'savings' | 'banners' | 'settings'
@@ -113,8 +113,8 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
   };
 
   useEffect(() => {
-    refreshAllData();
-  }, []);
+    if (isAdmin) refreshAllData();
+  }, [isAdmin]);
 
   const showFeedback = (msg: string) => {
     setFeedbackMsg(msg);
@@ -231,6 +231,19 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
   const pendingSavingsCount = savingsTransactions.filter(t => t.status === 'pending').length;
   const pendingBnplCount = bnplApps.filter(a => a.status === 'pending').length;
   const lowStockProducts = products.filter(p => p.stock <= 3);
+
+  if (!isAdmin) {
+    return (
+      <div className="min-h-screen bg-slate-950 text-white flex items-center justify-center p-6">
+        <div className="max-w-md w-full rounded-2xl border border-slate-800 bg-slate-900 p-6 text-center">
+          <ShieldCheck className="w-10 h-10 text-red-400 mx-auto mb-3" />
+          <h1 className="text-xl font-bold mb-2">Administrator access restricted</h1>
+          <p className="text-sm text-slate-400">Sign in with the authorised Neo Tech Gadget administrator email to access this area.</p>
+          <button onClick={() => onNavigate('home')} className="mt-5 px-5 py-2.5 rounded-xl bg-red-600 text-white font-semibold">Return to store</button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col md:flex-row">
