@@ -42,7 +42,7 @@ export const authService = {
       fullName: extraData?.fullName || firebaseUser.displayName || 'Customer',
       phone: extraData?.phone || '',
       profilePhotoUrl: firebaseUser.photoURL || '',
-      role: isOwnerAdmin ? 'admin' : (extraData?.role || 'customer'),
+      role: isOwnerAdmin ? 'admin' : 'customer',
       savedAddresses: [],
       wishlist: [],
       createdAt: new Date().toISOString(),
