@@ -133,7 +133,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
         </div>
 
         {/* Right: Product Information & Purchase Actions */}
-        <div className="lg:col-span-6 space-y-6">
+        <div className="lg:col-span-6 min-w-0 space-y-6">
           {/* Header & Title */}
           <div>
             <div className="flex items-center justify-between text-xs font-semibold text-slate-400 mb-2">
@@ -198,12 +198,12 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
           </p>
 
           {/* iPhone / Device Inspection Checklist */}
-          <div className="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-2.5">
+          <div className="min-w-0 p-4 sm:p-5 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
               Hardware & Condition Inspection Report
             </h4>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
-              <div className="p-2.5 rounded-xl bg-slate-950 border border-slate-800">
+            <div className="grid grid-cols-1 min-[420px]:grid-cols-2 xl:grid-cols-3 gap-3 text-xs">
+              <div className="min-w-0 p-3 rounded-xl bg-slate-950 border border-slate-800">
                 <span className="text-[10px] text-slate-400 block">Condition Grade</span>
                 <span className="font-semibold text-white">
                   {product.physicalCondition || (product.condition === 'brand-new' ? 'Sealed Brand New' : 'Flawless Grade A+')}
@@ -211,7 +211,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
               </div>
 
               {product.batteryHealth && (
-                <div className="p-2.5 rounded-xl bg-slate-950 border border-slate-800">
+                <div className="min-w-0 p-3 rounded-xl bg-slate-950 border border-slate-800">
                   <span className="text-[10px] text-slate-400 block">Battery Health</span>
                   <span className="font-bold text-cyan-400 flex items-center gap-1">
                     <BatteryCharging className="w-3.5 h-3.5" />
@@ -220,30 +220,30 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
                 </div>
               )}
 
-              <div className="p-2.5 rounded-xl bg-slate-950 border border-slate-800">
+              <div className="min-w-0 p-3 rounded-xl bg-slate-950 border border-slate-800">
                 <span className="text-[10px] text-slate-400 block">Biometrics / Face ID</span>
                 <span className="font-semibold text-emerald-400">
                   {product.faceId || 'Tested 100%'}
                 </span>
               </div>
 
-              <div className="p-2.5 rounded-xl bg-slate-950 border border-slate-800">
+              <div className="min-w-0 p-3 rounded-xl bg-slate-950 border border-slate-800">
                 <span className="text-[10px] text-slate-400 block">SIM Configuration</span>
-                <span className="font-semibold text-white truncate">
+                <span className="block font-semibold text-white break-words whitespace-normal">
                   {product.simConfig || 'Physical + eSIM'}
                 </span>
               </div>
 
-              <div className="p-2.5 rounded-xl bg-slate-950 border border-slate-800">
+              <div className="min-w-0 p-3 rounded-xl bg-slate-950 border border-slate-800">
                 <span className="text-[10px] text-slate-400 block">Network Status</span>
                 <span className="font-semibold text-white">
                   {product.networkStatus || 'Factory Unlocked'}
                 </span>
               </div>
 
-              <div className="p-2.5 rounded-xl bg-slate-950 border border-slate-800">
+              <div className="min-w-0 p-3 rounded-xl bg-slate-950 border border-slate-800">
                 <span className="text-[10px] text-slate-400 block">Warranty Period</span>
-                <span className="font-semibold text-amber-400 truncate">
+                <span className="block font-semibold text-amber-400 break-words whitespace-normal leading-relaxed">
                   {product.warranty}
                 </span>
               </div>
@@ -256,7 +256,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
               <label className="block text-xs font-semibold text-slate-300 mb-2">
                 Color: <span className="text-white font-bold">{selectedColor}</span>
               </label>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap items-center gap-2">
                 {product.colors.map(color => (
                   <button
                     key={color}
@@ -280,7 +280,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
               <label className="block text-xs font-semibold text-slate-300 mb-2">
                 Storage: <span className="text-white font-bold">{selectedStorage}</span>
               </label>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap items-center gap-2">
                 {product.storageOptions.map(storage => (
                   <button
                     key={storage}
@@ -305,11 +305,11 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
       <div className="grid grid-cols-1 gap-8 pt-8 border-t border-slate-800">
         <div className="space-y-4">
           <h3 className="text-xl font-bold text-white tracking-tight">Technical Specifications</h3>
-          <div className="divide-y divide-slate-800 rounded-2xl bg-slate-900/60 border border-slate-800 overflow-hidden text-xs">
+          <div className="min-w-0 divide-y divide-slate-800 rounded-2xl bg-slate-900/60 border border-slate-800 overflow-hidden text-xs">
             {Object.entries(product.specifications || {}).map(([key, val]) => (
-              <div key={key} className="grid grid-cols-3 p-3.5">
-                <span className="font-semibold text-slate-400">{key}</span>
-                <span className="col-span-2 text-slate-200">{val}</span>
+              <div key={key} className="grid grid-cols-[minmax(0,0.85fr)_minmax(0,1.5fr)] gap-3 sm:gap-5 p-3.5 sm:p-4 items-start">
+                <span className="min-w-0 font-semibold text-slate-400 break-words">{key}</span>
+                <span className="min-w-0 text-slate-200 break-words whitespace-normal">{val}</span>
               </div>
             ))}
           </div>
