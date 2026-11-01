@@ -94,8 +94,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
   const hasActiveFilters =
     selectedCategory !== 'all' ||
     selectedCondition !== 'all' ||
-    selectedBrand !== 'all' ||
-
+    selectedBrand !== 'all';
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
