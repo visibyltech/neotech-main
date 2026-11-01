@@ -146,7 +146,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               className="p-2 rounded-xl bg-emerald-950/50 hover:bg-emerald-600 border border-emerald-700/60 hover:border-emerald-500 text-emerald-400 hover:text-white transition"
               title="Save towards this phone"
             >
-              <PiggyBank className="w-4 h-4" />
+              <PiggyBank className="w-3.5 h-3.5" />
             </button>
           </div>
         </div>
