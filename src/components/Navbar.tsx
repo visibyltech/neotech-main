@@ -35,7 +35,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   searchQuery,
   onSearchChange,
 }) => {
-  const { firebaseUser, profile, isAdmin, openAuthModal, logout } = useAuth();
+  const { firebaseUser, profile, openAuthModal, logout } = useAuth();
   const { totalItems } = useCart();
   const { wishlist } = useWishlist();
 
@@ -267,7 +267,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
 
             {/* Admin Direct Button (Always visible for admin) */}
-            {isAdmin && (
+            {canAccessAdminPortal && (
               <button
                 onClick={() => handleNavClick('admin')}
                 className="hidden xl:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 border border-red-500/60 text-red-400 hover:bg-red-500/10 text-xs font-semibold transition"
