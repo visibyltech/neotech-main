@@ -4,7 +4,6 @@ import {
   ArrowRight,
   Lock,
   Building,
-  Upload,
   Copy,
 } from 'lucide-react';
 import { Product, SavingsFrequency, SavingsPlan, BusinessSettings } from '../types';
@@ -160,10 +159,10 @@ export const SaveToBuyPlannerView: React.FC<SaveToBuyPlannerViewProps> = ({
 
         <div className="space-y-2">
           <span className="text-xs font-bold uppercase tracking-wider text-emerald-400 bg-emerald-950 px-3 py-1 rounded-full border border-emerald-800">
-            Savings Plan Active
+            Savings Plan Created — Deposit Pending
           </span>
           <h1 className="text-3xl font-extrabold text-white tracking-tight">
-            Congratulations! Your Plan is Live.
+            Your Savings Plan Has Been Created
           </h1>
           <p className="text-sm text-slate-300">
             Target Device: <span className="font-bold text-white">{createdPlan.productName}</span>
@@ -192,7 +191,7 @@ export const SaveToBuyPlannerView: React.FC<SaveToBuyPlannerViewProps> = ({
         </div>
 
         <p className="text-xs text-slate-400 max-w-lg mx-auto">
-          You can make deposits anytime from your customer dashboard via bank transfer or online payment. Once your target hits 100%, your order is generated and ready for immediate pickup or delivery.
+          Your first deposit receipt has been submitted for administrator verification. You can monitor the savings plan and future deposits from your customer dashboard.
         </p>
 
         <div className="flex justify-center gap-3 pt-4">
