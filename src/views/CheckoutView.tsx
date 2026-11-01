@@ -205,7 +205,7 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({ onNavigate, onOpenRe
         <p className="text-sm text-slate-400">Please sign in or create an account before placing an order. Your cart will remain saved.</p>
         <div className="flex justify-center gap-3">
           <button type="button" onClick={() => openAuthModal('login')} className="px-5 py-3 rounded-xl bg-red-600 text-white font-bold text-sm">Sign In</button>
-          <button type="button" onClick={() => openAuthModal('signup')} className="px-5 py-3 rounded-xl bg-slate-800 text-white font-bold text-sm">Create Account</button>
+          <button type="button" onClick={() => openAuthModal('register')} className="px-5 py-3 rounded-xl bg-slate-800 text-white font-bold text-sm">Create Account</button>
         </div>
         <button type="button" onClick={() => onNavigate('cart')} className="text-xs text-slate-400 hover:text-white">Return to cart</button>
       </div>
