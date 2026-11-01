@@ -15,7 +15,6 @@ interface AuthContextType {
   closeAuthModal: () => void;
   logout: () => Promise<void>;
   refreshProfile: () => Promise<void>;
-  simulateAdminMode: (enable: boolean) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -26,10 +25,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [authModalMode, setAuthModalMode] = useState<'login' | 'register' | 'forgot'>('login');
-  const [adminSimulation, setAdminSimulation] = useState<boolean>(() => {
-    return localStorage.getItem('neo_admin_preview') === 'true';
-  });
-
   const refreshProfile = async () => {
     if (auth.currentUser) {
       const p = await authService.getUserProfile(auth.currentUser.uid);
@@ -68,17 +63,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setProfile(null);
   };
 
-  const simulateAdminMode = (enable: boolean) => {
-    setAdminSimulation(enable);
-    localStorage.setItem('neo_admin_preview', enable ? 'true' : 'false');
-  };
-
-  const isRealAdmin = Boolean(
-    authService.isAdminEmail(firebaseUser?.email) ||
-    profile?.role === 'admin'
-  );
-
-  const isAdmin = isRealAdmin || adminSimulation;
+  // Admin access is restricted to the explicitly assigned owner email.
+  const isAdmin = authService.isAdminEmail(firebaseUser?.email);
 
   return (
     <AuthContext.Provider
@@ -93,7 +79,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         closeAuthModal,
         logout,
         refreshProfile,
-        simulateAdminMode,
       }}
     >
       {children}
