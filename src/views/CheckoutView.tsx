@@ -56,11 +56,14 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({ onNavigate, onOpenRe
     settingsService.getSettings().then(setSettings);
   }, []);
 
-  const handleCopyAccount = () => {
-    if (settings?.bankDetails.accountNumber) {
-      navigator.clipboard.writeText(settings.bankDetails.accountNumber);
+  const handleCopyAccount = async () => {
+    const accountNumber = settings?.bankDetails.accountNumber || '0040250513';
+    try {
+      await navigator.clipboard.writeText(accountNumber);
       setCopiedBank(true);
       setTimeout(() => setCopiedBank(false), 2500);
+    } catch {
+      setErrorMessage('Unable to copy automatically. Please select and copy the account number.');
     }
   };
 
