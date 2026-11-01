@@ -23,8 +23,6 @@ import { formatNaira } from '../utils/formatters';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
 import { useAuth } from '../context/AuthContext';
-import { bnplService } from '../services/bnplService';
-import { savingsService } from '../services/savingsService';
 
 interface ProductDetailViewProps {
   product: Product;
@@ -48,26 +46,12 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [selectedColor, setSelectedColor] = useState(product.colors[0] || 'Default');
   const [selectedStorage, setSelectedStorage] = useState(product.storageOptions[0] || 'Standard');
-  const [activePurchaseTab, setActivePurchaseTab] = useState<'buy-now' | 'save-to-buy' | 'bnpl'>('buy-now');
   const [zoomImage, setZoomImage] = useState<string | null>(null);
-
-  // Save to Buy tab options
-  const [saveFrequency, setSaveFrequency] = useState<SavingsFrequency>('weekly');
-  const [saveDurationWeeks, setSaveDurationWeeks] = useState(12);
-
-  // BNPL tab options
-  const [bnplTenureMonths, setBnplTenureMonths] = useState(6);
 
   const [addedToast, setAddedToast] = useState(false);
 
   const isLiked = wishlist.includes(product.id);
   const isOutOfStock = product.stock <= 0;
-
-  // Calculate Save to Buy schedule for this product
-  const saveSchedule = savingsService.calculateDepositSchedule(product.price, saveDurationWeeks, saveFrequency);
-
-  // Calculate Credably financing for this product
-  const bnplFinancing = bnplService.calculateFinancing(product.price, bnplTenureMonths);
 
   const handleAddToCart = () => {
     const res = addToCart(product, 1, selectedColor, selectedStorage);
@@ -78,8 +62,8 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
   };
 
   const handleInstantBuyNow = () => {
-    addToCart(product, 1, selectedColor, selectedStorage);
-    onNavigate('checkout');
+    const result = addToCart(product, 1, selectedColor, selectedStorage);
+    if (result.success) onNavigate('checkout');
   };
 
   return (
@@ -158,7 +142,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
               </span>
               <span className="flex items-center gap-1.5 text-emerald-400">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                In Stock ({product.stock} units ready in Lagos)
+                In Stock ({product.stock} available)
               </span>
             </div>
 
@@ -182,6 +166,57 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
                 </span>
               )}
             </div>
+          </div>
+
+          {/* Primary purchase actions: immediately below product name and price */}
+          <div className="space-y-2.5">
+            <div className="grid grid-cols-2 gap-2.5">
+              <button
+                type="button"
+                disabled={isOutOfStock}
+                onClick={handleAddToCart}
+                className="min-w-0 py-3 px-2 sm:px-4 rounded-xl bg-slate-800 hover:bg-slate-700 disabled:opacity-40 text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 border border-slate-700 transition"
+              >
+                <ShoppingCart className="w-4 h-4 shrink-0" />
+                <span>Add to Cart</span>
+              </button>
+              <button
+                type="button"
+                disabled={isOutOfStock}
+                onClick={handleInstantBuyNow}
+                className="min-w-0 py-3 px-2 sm:px-4 rounded-xl bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 disabled:opacity-40 text-white font-bold text-xs sm:text-sm shadow-lg shadow-red-600/20 flex items-center justify-center gap-2 transition"
+              >
+                <Zap className="w-4 h-4 shrink-0" />
+                <span>Checkout Now</span>
+              </button>
+            </div>
+            <button
+              type="button"
+              disabled={isOutOfStock}
+              onClick={() => onOpenSaveToBuyModal(product, {
+                frequency: 'weekly',
+                durationWeeks: 12,
+                color: selectedColor,
+                storage: selectedStorage,
+              })}
+              className="w-full py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40 text-white font-bold text-sm flex items-center justify-center gap-2 transition"
+            >
+              <PiggyBank className="w-4 h-4" />
+              Save to Buy
+            </button>
+            <button
+              type="button"
+              disabled={isOutOfStock}
+              onClick={() => onOpenBNPLModal(product, {
+                tenureMonths: 6,
+                color: selectedColor,
+                storage: selectedStorage,
+              })}
+              className="w-full py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:opacity-40 text-white font-bold text-sm flex items-center justify-center gap-2 transition"
+            >
+              <CreditCard className="w-4 h-4" />
+              Buy Now Pay Later with Credably
+            </button>
           </div>
 
           {/* Description */}
@@ -290,251 +325,6 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
             </div>
           )}
 
-          {/* THE 3 PURCHASING OPTIONS TABS */}
-          <div className="pt-2">
-            <div className="flex items-center rounded-2xl bg-slate-950 p-1 border border-slate-800">
-              <button
-                onClick={() => setActivePurchaseTab('buy-now')}
-                className={`flex-1 py-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 ${
-                  activePurchaseTab === 'buy-now'
-                    ? 'bg-red-600 text-white shadow-lg'
-                    : 'text-slate-400 hover:text-white'
-                }`}
-              >
-                <Zap className="w-3.5 h-3.5" />
-                <span>1. Buy Now</span>
-              </button>
-
-              <button
-                onClick={() => setActivePurchaseTab('save-to-buy')}
-                className={`flex-1 py-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 ${
-                  activePurchaseTab === 'save-to-buy'
-                    ? 'bg-emerald-600 text-white shadow-lg'
-                    : 'text-emerald-400 hover:text-emerald-300'
-                }`}
-              >
-                <PiggyBank className="w-3.5 h-3.5" />
-                <span>2. Save to Buy</span>
-              </button>
-
-              <button
-                onClick={() => setActivePurchaseTab('bnpl')}
-                className={`flex-1 py-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 ${
-                  activePurchaseTab === 'bnpl'
-                    ? 'bg-blue-600 text-white shadow-lg'
-                    : 'text-blue-400 hover:text-blue-300'
-                }`}
-              >
-                <CreditCard className="w-3.5 h-3.5" />
-                <span>3. Credably BNPL</span>
-              </button>
-            </div>
-
-            {/* TAB 1: Buy Now / Pay Now content */}
-            {activePurchaseTab === 'buy-now' && (
-              <div className="mt-4 p-5 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
-                <div className="flex items-center justify-between text-xs text-slate-300">
-                  <span>Pay Now Total:</span>
-                  <span className="text-xl font-bold text-white">{formatNaira(product.price)}</span>
-                </div>
-                <p className="text-xs text-slate-400 leading-relaxed">
-                  Pay immediately using verified Nigerian bank transfer or card gateway. Immediate pickup in Ikeja or same-day dispatch.
-                </p>
-                <div className="flex items-center gap-3">
-                  <button
-                    disabled={isOutOfStock}
-                    onClick={handleAddToCart}
-                    className="flex-1 py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 disabled:opacity-40 text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 border border-slate-700 transition"
-                  >
-                    <ShoppingCart className="w-4 h-4" />
-                    <span>Add to Cart</span>
-                  </button>
-
-                  <button
-                    disabled={isOutOfStock}
-                    onClick={handleInstantBuyNow}
-                    className="flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 disabled:opacity-40 text-white font-bold text-xs sm:text-sm shadow-xl shadow-red-600/30 flex items-center justify-center gap-2 transition"
-                  >
-                    <Zap className="w-4 h-4" />
-                    <span>Instant Checkout</span>
-                  </button>
-
-                  <button
-                    onClick={() => toggleWishlist(product.id)}
-                    className={`p-3 rounded-xl border transition ${
-                      isLiked
-                        ? 'bg-red-600 text-white border-red-500'
-                        : 'bg-slate-800 text-slate-300 border-slate-700 hover:text-white'
-                    }`}
-                    title="Wishlist"
-                  >
-                    <Heart className={`w-4 h-4 ${isLiked ? 'fill-current' : ''}`} />
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {/* TAB 2: Save to Buy content */}
-            {activePurchaseTab === 'save-to-buy' && (
-              <div className="mt-4 p-5 rounded-2xl bg-gradient-to-b from-emerald-950/40 to-slate-900 border border-emerald-800/60 space-y-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-1.5 text-emerald-400 text-xs font-bold uppercase tracking-wider">
-                    <PiggyBank className="w-4 h-4" />
-                    Structured Savings Plan
-                  </div>
-                  <span className="text-xs text-emerald-400 font-bold bg-emerald-950 px-2 py-0.5 rounded border border-emerald-800">
-                    0% Interest
-                  </span>
-                </div>
-
-                {/* Duration selector */}
-                <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                    Choose Duration:
-                  </label>
-                  <div className="grid grid-cols-4 gap-2">
-                    {[4, 8, 12, 24].map(w => (
-                      <button
-                        key={w}
-                        type="button"
-                        onClick={() => setSaveDurationWeeks(w)}
-                        className={`py-1.5 rounded-lg text-xs font-semibold border transition ${
-                          saveDurationWeeks === w
-                            ? 'bg-emerald-600 text-white border-emerald-500'
-                            : 'bg-slate-900 text-slate-300 border-slate-800 hover:border-slate-700'
-                        }`}
-                      >
-                        {w} Weeks
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Frequency selector */}
-                <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                    Deposit Frequency:
-                  </label>
-                  <div className="grid grid-cols-3 gap-2">
-                    {(['daily', 'weekly', 'monthly'] as SavingsFrequency[]).map(freq => (
-                      <button
-                        key={freq}
-                        type="button"
-                        onClick={() => setSaveFrequency(freq)}
-                        className={`py-1.5 rounded-lg text-xs font-semibold capitalize border transition ${
-                          saveFrequency === freq
-                            ? 'bg-emerald-600 text-white border-emerald-500'
-                            : 'bg-slate-900 text-slate-300 border-slate-800 hover:border-slate-700'
-                        }`}
-                      >
-                        {freq}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Transparent calculation output */}
-                <div className="p-3.5 rounded-xl bg-slate-950 border border-emerald-900/50 space-y-1.5 text-xs">
-                  <div className="flex justify-between text-slate-300">
-                    <span>Target Phone Price:</span>
-                    <span className="font-bold text-white">{formatNaira(product.price)}</span>
-                  </div>
-                  <div className="flex justify-between text-slate-300">
-                    <span>Deposit per {saveFrequency === 'daily' ? 'day' : saveFrequency === 'weekly' ? 'week' : 'month'}:</span>
-                    <span className="font-black text-emerald-400 text-base">{formatNaira(saveSchedule.depositAmount)}</span>
-                  </div>
-                  <div className="flex justify-between text-slate-400 text-[11px] pt-1 border-t border-slate-800">
-                    <span>Total Installments:</span>
-                    <span>{saveSchedule.installmentsCount} deposits</span>
-                  </div>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    onOpenSaveToBuyModal(product, {
-                      frequency: saveFrequency,
-                      durationWeeks: saveDurationWeeks,
-                      color: selectedColor,
-                      storage: selectedStorage,
-                    });
-                  }}
-                  className="w-full py-3 px-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs sm:text-sm shadow-xl shadow-emerald-500/20 flex items-center justify-center gap-2 transition"
-                >
-                  <PiggyBank className="w-4 h-4" />
-                  <span>Start Save to Buy for this Device</span>
-                </button>
-              </div>
-            )}
-
-            {/* TAB 3: Credably BNPL content */}
-            {activePurchaseTab === 'bnpl' && (
-              <div className="mt-4 p-5 rounded-2xl bg-gradient-to-b from-blue-950/40 to-slate-900 border border-blue-800/60 space-y-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-1.5 text-blue-400 text-xs font-bold uppercase tracking-wider">
-                    <CreditCard className="w-4 h-4" />
-                    Credably Smartphone Financing
-                  </div>
-                  <span className="text-xs text-blue-400 font-bold bg-blue-950 px-2 py-0.5 rounded border border-blue-800">
-                    Instant Approval
-                  </span>
-                </div>
-
-                {/* Tenure Selector */}
-                <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                    Select Financing Tenure:
-                  </label>
-                  <div className="grid grid-cols-4 gap-2">
-                    {[3, 6, 9, 12].map(m => (
-                      <button
-                        key={m}
-                        type="button"
-                        onClick={() => setBnplTenureMonths(m)}
-                        className={`py-1.5 rounded-lg text-xs font-semibold border transition ${
-                          bnplTenureMonths === m
-                            ? 'bg-blue-600 text-white border-blue-500'
-                            : 'bg-slate-900 text-slate-300 border-slate-800 hover:border-slate-700'
-                        }`}
-                      >
-                        {m} Months
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Financing Breakdown */}
-                <div className="p-3.5 rounded-xl bg-slate-950 border border-blue-900/50 space-y-1.5 text-xs">
-                  <div className="flex justify-between text-slate-300">
-                    <span>Estimated Monthly Repayment:</span>
-                    <span className="font-black text-blue-400 text-base">{formatNaira(bnplFinancing.monthlyInstallment)} / mo</span>
-                  </div>
-                  <div className="flex justify-between text-slate-300">
-                    <span>Initial Down Payment (20%):</span>
-                    <span className="font-bold text-white">{formatNaira(bnplFinancing.downPayment)}</span>
-                  </div>
-                  <div className="flex justify-between text-slate-400 text-[11px] pt-1 border-t border-slate-800">
-                    <span>Financed Principal:</span>
-                    <span>{formatNaira(bnplFinancing.financedAmount)}</span>
-                  </div>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    onOpenBNPLModal(product, {
-                      tenureMonths: bnplTenureMonths,
-                      color: selectedColor,
-                      storage: selectedStorage,
-                    });
-                  }}
-                  className="w-full py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs sm:text-sm shadow-xl shadow-blue-600/20 flex items-center justify-center gap-2 transition"
-                >
-                  <CreditCard className="w-4 h-4" />
-                  <span>Apply with Credably ({bnplTenureMonths} Months)</span>
-                </button>
-              </div>
-            )}
           </div>
         </div>
       </div>
