@@ -190,7 +190,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
                 onClick={handleAddToCart}
                 className="min-w-0 py-3 px-2 sm:px-4 rounded-xl bg-slate-800 hover:bg-slate-700 disabled:opacity-40 text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 border border-slate-700 transition"
               >
-                <ShoppingCart className="w-4 h-4 shrink-0" />
+                <ShoppingCart className="w-3.5 h-3.5 shrink-0" />
                 <span>Add to Cart</span>
               </button>
               <button
@@ -199,7 +199,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
                 onClick={handleInstantBuyNow}
                 className="min-w-0 py-3 px-2 sm:px-4 rounded-xl bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 disabled:opacity-40 text-white font-bold text-xs sm:text-sm shadow-lg shadow-red-600/20 flex items-center justify-center gap-2 transition"
               >
-                <Zap className="w-4 h-4 shrink-0" />
+                <Zap className="w-3.5 h-3.5 shrink-0" />
                 <span>Checkout Now</span>
               </button>
             </div>
@@ -214,7 +214,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
               })}
               className="w-full py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40 text-white font-bold text-sm flex items-center justify-center gap-2 transition"
             >
-              <PiggyBank className="w-4 h-4" />
+              <PiggyBank className="w-3.5 h-3.5" />
               Save to Buy
             </button>
             <button
@@ -227,7 +227,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
               })}
               className="w-full py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:opacity-40 text-white font-bold text-sm flex items-center justify-center gap-2 transition"
             >
-              <CreditCard className="w-4 h-4" />
+              <CreditCard className="w-3.5 h-3.5" />
               Buy Now Pay Later with Credably
             </button>
           </div>
