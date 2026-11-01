@@ -1,5 +1,5 @@
-import React from 'react';
-import { Trash2, Plus, Minus, ArrowRight, ShoppingBag, ShieldCheck, ArrowLeft, Truck, Store } from 'lucide-react';
+import React, { useState } from 'react';
+import { Trash2, Plus, Minus, ArrowRight, ShoppingBag, ShieldCheck, ArrowLeft, Truck, Store, MapPin } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { formatNaira } from '../utils/formatters';
 
@@ -19,9 +19,21 @@ export const CartView: React.FC<CartViewProps> = ({ onNavigate, onOpenProduct })
     setFulfillmentType,
     selectedState,
     setSelectedState,
+    deliveryDetails,
+    setDeliveryDetails,
     deliveryFee,
     totalPrice,
   } = useCart();
+
+  const [deliveryFormError, setDeliveryFormError] = useState('');
+  const updateDeliveryField = (field: keyof typeof deliveryDetails, value: string) => { setDeliveryDetails({ ...deliveryDetails, [field]: value }); setDeliveryFormError(''); };
+  const handleProceedToCheckout = () => {
+    if (fulfillmentType === 'delivery') {
+      const { recipientName, recipientPhone, lga, fullAddress } = deliveryDetails;
+      if (!recipientName.trim() || !recipientPhone.trim() || !lga.trim() || !fullAddress.trim()) { setDeliveryFormError('Please complete the recipient name, phone number, LGA and full delivery address before continuing.'); return; }
+    }
+    setDeliveryFormError(''); onNavigate('checkout');
+  };
 
   const nigerianStates = [
     'Lagos Mainland',
@@ -224,6 +236,16 @@ export const CartView: React.FC<CartViewProps> = ({ onNavigate, onOpenProduct })
                   ))}
                 </select>
               </div>
+
+              <div className="space-y-3 rounded-2xl border border-slate-800 bg-slate-950/70 p-4">
+                <div className="flex items-center gap-2 text-white"><MapPin className="h-4 w-4 text-red-400" /><h4 className="text-sm font-bold">Delivery Address Details</h4></div>
+                <p className="text-[11px] leading-relaxed text-slate-400">Enter where the order should be delivered and who will receive it. These details will be attached to your order for the admin and delivery team.</p>
+                <div className="space-y-1"><label className="block text-xs font-medium text-slate-300">Recipient's Full Name *</label><input value={deliveryDetails.recipientName} onChange={e => updateDeliveryField('recipientName', e.target.value)} placeholder="Name of person receiving the order" className="w-full rounded-xl border border-slate-700 bg-slate-900 px-3 py-2.5 text-sm text-white outline-none focus:border-red-500" /></div>
+                <div className="space-y-1"><label className="block text-xs font-medium text-slate-300">Recipient's Phone Number *</label><input type="tel" value={deliveryDetails.recipientPhone} onChange={e => updateDeliveryField('recipientPhone', e.target.value)} placeholder="Phone number for delivery contact" className="w-full rounded-xl border border-slate-700 bg-slate-900 px-3 py-2.5 text-sm text-white outline-none focus:border-red-500" /></div>
+                <div className="space-y-1"><label className="block text-xs font-medium text-slate-300">LGA / City *</label><input value={deliveryDetails.lga} onChange={e => updateDeliveryField('lga', e.target.value)} placeholder="e.g. Ibadan North, Ikeja" className="w-full rounded-xl border border-slate-700 bg-slate-900 px-3 py-2.5 text-sm text-white outline-none focus:border-red-500" /></div>
+                <div className="space-y-1"><label className="block text-xs font-medium text-slate-300">Full Street Address *</label><textarea rows={3} value={deliveryDetails.fullAddress} onChange={e => updateDeliveryField('fullAddress', e.target.value)} placeholder="House number, street, estate, area and nearby landmark" className="w-full resize-y rounded-xl border border-slate-700 bg-slate-900 px-3 py-2.5 text-sm text-white outline-none focus:border-red-500" /></div>
+                <div className="space-y-1"><label className="block text-xs font-medium text-slate-300">Delivery Instructions (Optional)</label><textarea rows={2} value={deliveryDetails.instructions} onChange={e => updateDeliveryField('instructions', e.target.value)} placeholder="Landmark, gate instructions or preferred delivery time" className="w-full resize-y rounded-xl border border-slate-700 bg-slate-900 px-3 py-2.5 text-sm text-white outline-none focus:border-red-500" /></div>
+              </div>
             ) : (
               <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-300 space-y-1">
                 <span className="font-bold text-white flex items-center gap-1">
@@ -235,6 +257,8 @@ export const CartView: React.FC<CartViewProps> = ({ onNavigate, onOpenProduct })
                 </p>
               </div>
             )}
+
+            {deliveryFormError && fulfillmentType === 'delivery' && <p role="alert" className="rounded-xl border border-rose-500/40 bg-rose-950/40 p-3 text-xs leading-relaxed text-rose-300">{deliveryFormError}</p>}
 
             {/* Calculations Breakdown */}
             <div className="space-y-2 pt-2 border-t border-slate-800 text-xs">
@@ -260,7 +284,7 @@ export const CartView: React.FC<CartViewProps> = ({ onNavigate, onOpenProduct })
 
             {/* Checkout Action Button */}
             <button
-              onClick={() => onNavigate('checkout')}
+              onClick={handleProceedToCheckout}
               className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white font-bold text-sm shadow-xl shadow-red-600/30 flex items-center justify-center gap-2 transition"
             >
               <span>Proceed to Checkout</span>
