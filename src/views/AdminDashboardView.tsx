@@ -610,11 +610,17 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                     <div>
                       <span className="text-slate-500 block text-[10px] uppercase font-bold">Fulfillment</span>
                       <p className="font-bold text-white capitalize">{order.fulfillmentType}</p>
-                      <p className="text-slate-400">
-                        {order.fulfillmentType === 'delivery'
-                          ? `${order.deliveryAddress?.fullAddress}, ${order.deliveryAddress?.state}`
-                          : 'Pickup: Robinson Plaza, Warri'}
-                      </p>
+                      {order.fulfillmentType === 'delivery' ? (
+                        <div className="mt-1 space-y-1 text-slate-300">
+                          <p><span className="text-slate-500">Recipient:</span> {order.deliveryAddress?.recipientName || order.customerName}</p>
+                          <p><span className="text-slate-500">Delivery phone:</span> {order.deliveryAddress?.recipientPhone || order.customerPhone}</p>
+                          <p className="whitespace-pre-wrap break-words">{order.deliveryAddress?.fullAddress}</p>
+                          <p>{order.deliveryAddress?.lga}, {order.deliveryAddress?.state}</p>
+                          {order.deliveryAddress?.instructions && <p className="whitespace-pre-wrap break-words text-amber-300"><span className="text-slate-500">Instructions:</span> {order.deliveryAddress.instructions}</p>}
+                        </div>
+                      ) : (
+                        <p className="text-slate-400">Pickup: Robinson Plaza, Warri</p>
+                      )}
                     </div>
 
                     <div>
