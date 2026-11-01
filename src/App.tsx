@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import { WishlistProvider } from './context/WishlistContext';
 import { Navbar } from './components/Navbar';
@@ -22,6 +22,7 @@ import { settingsService } from './services/settingsService';
 import { Product, Banner, Category, Order, BusinessSettings, SavingsFrequency, ProductCondition } from './types';
 
 function MainApp() {
+  const { isAdmin, openAuthModal } = useAuth();
   const [currentView, setCurrentView] = useState<string>('home');
   const [viewParams, setViewParams] = useState<any>({});
   const [searchQuery, setSearchQuery] = useState('');
@@ -115,7 +116,7 @@ function MainApp() {
   return (
     <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100 selection:bg-red-600 selection:text-white font-sans antialiased">
       {/* Top Navigation */}
-      {currentView !== 'admin' && (
+      {(currentView !== 'admin' || !isAdmin) && (
         <Navbar
           currentView={currentView}
           onNavigate={handleNavigate}
@@ -209,16 +210,27 @@ function MainApp() {
           />
         )}
 
-        {currentView === 'admin' && (
+        {currentView === 'admin' && isAdmin && (
           <AdminDashboardView
             onNavigate={handleNavigate}
             onOpenReceipt={(order) => setReceiptOrder(order)}
           />
         )}
+
+        {currentView === 'admin' && !isAdmin && (
+          <div className="min-h-[60vh] flex items-center justify-center px-4 py-16">
+            <div className="max-w-md w-full text-center rounded-2xl border border-slate-800 bg-slate-900 p-7">
+              <h1 className="text-xl font-bold text-white mb-2">Administrator sign-in required</h1>
+              <p className="text-sm text-slate-400 mb-5">The Neo Tech Gadget admin portal is private. Sign in with the assigned administrator email to continue.</p>
+              <button onClick={() => openAuthModal('login')} className="px-5 py-3 rounded-xl bg-red-600 hover:bg-red-500 text-white font-semibold">Sign in as administrator</button>
+              <button onClick={() => handleNavigate('home')} className="block mx-auto mt-3 text-sm text-slate-400 hover:text-white">Return to store</button>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Footer */}
-      {currentView !== 'admin' && <Footer onNavigate={handleNavigate} />}
+      {(currentView !== 'admin' || !isAdmin) && <Footer onNavigate={handleNavigate} />}
 
       {/* Floating WhatsApp Support Button */}
       <WhatsAppButton whatsappNumber={settings?.contactInfo.whatsappNumber || '2348135933346'} />
