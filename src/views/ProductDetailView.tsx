@@ -11,14 +11,12 @@ import {
   Truck,
   RotateCcw,
   Sparkles,
-  PiggyBank,
-  CreditCard,
   Zap,
   Info,
   Maximize2,
   X,
 } from 'lucide-react';
-import { Product, SavingsFrequency } from '../types';
+import { Product } from '../types';
 import { formatNaira } from '../utils/formatters';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
@@ -27,16 +25,12 @@ interface ProductDetailViewProps {
   product: Product;
   onBack: () => void;
   onNavigate: (view: string, params?: any) => void;
-  onOpenSaveToBuyModal: (product: Product, options: { frequency: SavingsFrequency; durationWeeks: number; color: string; storage: string }) => void;
-  onOpenBNPLModal: (product: Product, options: { tenureMonths: number; color: string; storage: string }) => void;
 }
 
 export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
   product,
   onBack,
   onNavigate,
-  onOpenSaveToBuyModal,
-  onOpenBNPLModal,
 }) => {
   const { addToCart } = useCart();
   const { wishlist, toggleWishlist } = useWishlist();
@@ -145,7 +139,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
           )}
         </div>
 
-        {/* Right: Product Info & 3 Purchasing Modes */}
+        {/* Right: Product Information & Purchase Actions */}
         <div className="lg:col-span-6 space-y-6">
           {/* Header & Title */}
           <div>
@@ -203,33 +197,6 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
                 <span>Checkout Now</span>
               </button>
             </div>
-            <button
-              type="button"
-              disabled={isOutOfStock}
-              onClick={() => onOpenSaveToBuyModal(product, {
-                frequency: 'weekly',
-                durationWeeks: 12,
-                color: selectedColor,
-                storage: selectedStorage,
-              })}
-              className="w-full py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40 text-white font-bold text-sm flex items-center justify-center gap-2 transition"
-            >
-              <PiggyBank className="w-3.5 h-3.5" />
-              Save to Buy
-            </button>
-            <button
-              type="button"
-              disabled={isOutOfStock}
-              onClick={() => onOpenBNPLModal(product, {
-                tenureMonths: 6,
-                color: selectedColor,
-                storage: selectedStorage,
-              })}
-              className="w-full py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:opacity-40 text-white font-bold text-sm flex items-center justify-center gap-2 transition"
-            >
-              <CreditCard className="w-3.5 h-3.5" />
-              Buy Now Pay Later with Credably
-            </button>
           </div>
 
           {/* Description */}
