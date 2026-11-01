@@ -39,6 +39,10 @@ export const Navbar: React.FC<NavbarProps> = ({
   const { totalItems } = useCart();
   const { wishlist } = useWishlist();
 
+  const canAccessAdminPortal = Boolean(
+    firebaseUser?.email?.trim().toLowerCase() === 'usitakatelvin@gmail.com'
+  );
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
 
@@ -142,7 +146,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               className="relative p-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-slate-900 border border-transparent hover:border-slate-800 transition"
               title="My Wishlist"
             >
-              <Heart className="w-5 h-5" />
+              <Heart className="w-4 h-4" />
               {wishlist.length > 0 && (
                 <span className="absolute -top-1 -right-1 bg-red-600 text-white font-bold text-[10px] w-4 h-4 rounded-full flex items-center justify-center">
                   {wishlist.length}
@@ -198,7 +202,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                       {profile?.fullName || firebaseUser.email}
                     </p>
                     <p className="text-[11px] text-red-400 font-mono capitalize">
-                      {profile?.role || (isAdmin ? 'Admin' : 'Customer')}
+                      {canAccessAdminPortal ? 'Admin' : 'Customer'}
                     </p>
                   </div>
 
@@ -234,7 +238,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     Credably BNPL Apps
                   </button>
 
-                  {isAdmin && (
+                  {canAccessAdminPortal && (
                     <div className="pt-1 mt-1 border-t border-slate-800">
                       <button
                         onClick={() => handleNavClick('admin')}
@@ -278,7 +282,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="md:hidden p-2 text-slate-400 hover:text-white"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </div>
