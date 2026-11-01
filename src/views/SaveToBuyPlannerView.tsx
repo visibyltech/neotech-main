@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   PiggyBank,
   CheckCircle2,
@@ -13,8 +13,9 @@ import {
   Upload,
   Copy,
 } from 'lucide-react';
-import { Product, SavingsFrequency, SavingsPlan } from '../types';
+import { Product, SavingsFrequency, SavingsPlan, BusinessSettings } from '../types';
 import { savingsService } from '../services/savingsService';
+import { settingsService } from '../services/settingsService';
 import { formatNaira, formatDate } from '../utils/formatters';
 import { useAuth } from '../context/AuthContext';
 import confetti from 'canvas-confetti';
@@ -41,11 +42,43 @@ export const SaveToBuyPlannerView: React.FC<SaveToBuyPlannerViewProps> = ({
   const [customEmail, setCustomEmail] = useState(profile?.email || firebaseUser?.email || '');
 
   // First deposit flow
-  const [makeInitialDeposit, setMakeInitialDeposit] = useState(false);
   const [proofPreview, setProofPreview] = useState<string>('');
+  const [proofFileName, setProofFileName] = useState('');
+  const [settings, setSettings] = useState<BusinessSettings | null>(null);
+  const [copiedAccount, setCopiedAccount] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const [createdPlan, setCreatedPlan] = useState<SavingsPlan | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    settingsService.getSettings().then(setSettings);
+  }, []);
+
+  const handleReceiptUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      setErrorMessage('Please upload a receipt image (JPG or PNG).');
+      return;
+    }
+    setProofFileName(file.name);
+    setErrorMessage('');
+    const reader = new FileReader();
+    reader.onload = () => setProofPreview(reader.result as string);
+    reader.readAsDataURL(file);
+  };
+
+  const handleCopyAccount = async () => {
+    const accountNumber = settings?.bankDetails.accountNumber || '0040250513';
+    try {
+      await navigator.clipboard.writeText(accountNumber);
+      setCopiedAccount(true);
+      window.setTimeout(() => setCopiedAccount(false), 2000);
+    } catch {
+      setErrorMessage('Unable to copy automatically. Please select and copy the account number.');
+    }
+  };
 
   const selectedProduct = products.find(p => p.id === selectedProductId) || products[0];
 
@@ -63,6 +96,11 @@ export const SaveToBuyPlannerView: React.FC<SaveToBuyPlannerViewProps> = ({
     }
 
     if (!selectedProduct) return;
+    if (!proofPreview) {
+      setErrorMessage('Upload your bank transfer receipt to submit your first savings deposit.');
+      return;
+    }
+    setErrorMessage('');
     setIsSubmitting(true);
 
     try {
@@ -80,18 +118,32 @@ export const SaveToBuyPlannerView: React.FC<SaveToBuyPlannerViewProps> = ({
         selectedStorage: selectedProduct.storageOptions[0],
       });
 
-      // If user provided initial deposit proof
-      if (makeInitialDeposit && proofPreview) {
-        await savingsService.recordDeposit({
-          planId: plan.id,
-          userId: firebaseUser.uid,
-          amount: schedule.depositAmount,
-          paymentMethod: 'bank_transfer',
-          reference: `DEP-${Date.now().toString(36).toUpperCase()}`,
-          proofOfPaymentUrl: proofPreview,
-          autoVerify: false,
+      let uploadedProofUrl = proofPreview;
+      try {
+        const uploadResponse = await fetch('/api/upload', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            imageBase64: proofPreview,
+            fileName: `save-to-buy-proof-${Date.now()}.jpg`,
+            mimeType: 'image/jpeg',
+          }),
         });
+        const uploadResult = await uploadResponse.json();
+        if (uploadResult.url) uploadedProofUrl = uploadResult.url;
+      } catch {
+        // Keep the selected receipt as a fallback when the media endpoint is unavailable.
       }
+
+      await savingsService.recordDeposit({
+        planId: plan.id,
+        userId: firebaseUser.uid,
+        amount: schedule.depositAmount,
+        paymentMethod: 'bank_transfer',
+        reference: `DEP-${Date.now().toString(36).toUpperCase()}`,
+        proofOfPaymentUrl: uploadedProofUrl,
+        autoVerify: false,
+      });
 
       setCreatedPlan(plan);
       try {
@@ -99,6 +151,7 @@ export const SaveToBuyPlannerView: React.FC<SaveToBuyPlannerViewProps> = ({
       } catch {}
     } catch (err) {
       console.error('Error starting savings plan:', err);
+      setErrorMessage('We could not submit your savings plan and receipt. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -310,6 +363,45 @@ export const SaveToBuyPlannerView: React.FC<SaveToBuyPlannerViewProps> = ({
                 </span>
               </div>
             </div>
+
+            {/* Company transfer details and first deposit receipt */}
+            <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-3 text-xs">
+              <div className="flex items-center gap-2 text-white font-bold">
+                <Building className="w-4 h-4 text-emerald-400" />
+                Transfer your first deposit
+              </div>
+              <div className="space-y-1">
+                <div className="flex justify-between gap-3">
+                  <span className="text-slate-400">Bank</span>
+                  <span className="font-semibold text-white">{settings?.bankDetails.bankName || 'Premium Trust'}</span>
+                </div>
+                <div className="flex justify-between gap-3">
+                  <span className="text-slate-400">Account name</span>
+                  <span className="font-semibold text-white">{settings?.bankDetails.accountName || 'NEOTECHGADGET'}</span>
+                </div>
+                <div className="flex items-center justify-between gap-3 border-t border-slate-800 pt-2">
+                  <span className="text-slate-400">Account number</span>
+                  <span className="font-mono font-extrabold text-emerald-400">{settings?.bankDetails.accountNumber || '0040250513'}</span>
+                </div>
+                <div className="flex justify-end">
+                  <button type="button" onClick={handleCopyAccount} className="px-2.5 py-1 rounded-lg bg-slate-800 text-slate-200 text-[10px] font-semibold flex items-center gap-1">
+                    <Copy className="w-3 h-3" /> {copiedAccount ? 'Copied' : 'Copy account number'}
+                  </button>
+                </div>
+              </div>
+              <div className="border-t border-slate-800 pt-3 space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="font-semibold text-slate-200">First deposit amount</span>
+                  <span className="font-extrabold text-emerald-400">{formatNaira(schedule.depositAmount)}</span>
+                </div>
+                <label className="block text-slate-300 font-semibold">Upload transfer receipt *</label>
+                <input type="file" accept="image/*" required onChange={handleReceiptUpload} className="block w-full text-[11px] text-slate-400 file:mr-3 file:rounded-lg file:border-0 file:bg-slate-800 file:px-3 file:py-2 file:text-slate-200" />
+                {proofFileName && <p className="text-emerald-400 text-[10px]">Receipt selected: {proofFileName}</p>}
+                <p className="text-[10px] text-amber-400">Your deposit will remain pending until an administrator verifies the transfer.</p>
+              </div>
+            </div>
+
+            {errorMessage && <p className="text-xs text-rose-400">{errorMessage}</p>}
 
             {/* Start Button */}
             <button
