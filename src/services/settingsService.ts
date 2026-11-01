@@ -12,6 +12,15 @@ export const settingsService = {
       const snap = await getDoc(doc(db, SETTINGS_COL, SETTINGS_DOC_ID));
       if (snap.exists()) {
         const stored = snap.data() as BusinessSettings;
+        // Migrate the existing Firestore record to the company account details supplied by the owner.
+        const bankDetails = INITIAL_SETTINGS.bankDetails;
+        const hasOutdatedBankDetails =
+          stored.bankDetails?.accountNumber !== bankDetails.accountNumber ||
+          stored.bankDetails?.accountName !== bankDetails.accountName ||
+          stored.bankDetails?.bankName !== bankDetails.bankName;
+        if (hasOutdatedBankDetails) {
+          await setDoc(doc(db, SETTINGS_COL, SETTINGS_DOC_ID), { bankDetails }, { merge: true });
+        }
         const storedContact = stored.contactInfo || INITIAL_SETTINGS.contactInfo;
         const hasLegacyContact =
           storedContact.phone?.includes('814 902 4432') ||
@@ -41,7 +50,7 @@ export const settingsService = {
           return migrated;
         }
 
-        return stored;
+        return { ...INITIAL_SETTINGS, ...stored, bankDetails };
       }
       // If doesn't exist, try initializing with default
       await setDoc(doc(db, SETTINGS_COL, SETTINGS_DOC_ID), INITIAL_SETTINGS);
