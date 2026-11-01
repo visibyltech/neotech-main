@@ -26,16 +26,16 @@ interface CheckoutViewProps {
 }
 
 export const CheckoutView: React.FC<CheckoutViewProps> = ({ onNavigate, onOpenReceipt }) => {
-  const { items, subtotal, deliveryFee, totalPrice, fulfillmentType, selectedState, clearCart } = useCart();
+  const { items, subtotal, deliveryFee, totalPrice, fulfillmentType, selectedState, deliveryDetails, clearCart } = useCart();
   const { firebaseUser, profile, openAuthModal } = useAuth();
 
   // Form states
-  const [customerName, setCustomerName] = useState(profile?.fullName || firebaseUser?.displayName || '');
+  const [customerName, setCustomerName] = useState(deliveryDetails.recipientName || profile?.fullName || firebaseUser?.displayName || '');
   const [customerEmail, setCustomerEmail] = useState(profile?.email || firebaseUser?.email || '');
-  const [customerPhone, setCustomerPhone] = useState(profile?.phone || '');
-  const [deliveryLga, setDeliveryLga] = useState('');
-  const [fullAddress, setFullAddress] = useState('');
-  const [deliveryInstructions, setDeliveryInstructions] = useState('');
+  const [customerPhone, setCustomerPhone] = useState(deliveryDetails.recipientPhone || profile?.phone || '');
+  const [deliveryLga, setDeliveryLga] = useState(deliveryDetails.lga || '');
+  const [fullAddress, setFullAddress] = useState(deliveryDetails.fullAddress || '');
+  const [deliveryInstructions, setDeliveryInstructions] = useState(deliveryDetails.instructions || '');
 
   // Payment method
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('pay-now');
@@ -174,6 +174,8 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({ onNavigate, onOpenRe
           lga: deliveryLga.trim(),
           fullAddress: fullAddress.trim(),
           instructions: deliveryInstructions.trim(),
+          recipientName: customerName.trim(),
+          recipientPhone: customerPhone.trim(),
         } : undefined,
         pickupLocationId: fulfillmentType === 'pickup' ? 'warri-store' : undefined,
         paymentMethod,
