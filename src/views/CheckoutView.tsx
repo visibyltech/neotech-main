@@ -56,6 +56,14 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({ onNavigate, onOpenRe
     settingsService.getSettings().then(setSettings);
   }, []);
 
+  // Populate customer details after a guest signs in from the checkout prompt.
+  React.useEffect(() => {
+    if (!firebaseUser) return;
+    setCustomerName(current => current || profile?.fullName || firebaseUser.displayName || '');
+    setCustomerEmail(current => current || profile?.email || firebaseUser.email || '');
+    setCustomerPhone(current => current || profile?.phone || '');
+  }, [firebaseUser?.uid, firebaseUser?.displayName, firebaseUser?.email, profile?.fullName, profile?.email, profile?.phone]);
+
   const handleCopyAccount = async () => {
     const accountNumber = settings?.bankDetails.accountNumber || '0040250513';
     try {
