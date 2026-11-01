@@ -1,5 +1,5 @@
 import React from 'react';
-import { Heart, ShoppingCart, BatteryCharging, PiggyBank } from 'lucide-react';
+import { Heart, ShoppingCart, PiggyBank } from 'lucide-react';
 import { Product } from '../types';
 import { formatNaira } from '../utils/formatters';
 import { useCart } from '../context/CartContext';
@@ -43,17 +43,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               Brand New
             </span>
           ) : (
-            <div className="flex items-center gap-1">
-              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-amber-500/20 text-amber-300 border border-amber-500/40 backdrop-blur-md">
-                UK-Used
-              </span>
-              {product.batteryHealth && (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 backdrop-blur-md">
-                  <BatteryCharging className="w-3 h-3" />
-                  {product.batteryHealth}% Battery
-                </span>
-              )}
-            </div>
+            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-amber-500/20 text-amber-300 border border-amber-500/40 backdrop-blur-md">
+              UK-Used
+            </span>
           )}
 
           {discountPercent > 0 && (
