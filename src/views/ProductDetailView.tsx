@@ -310,7 +310,7 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
       </div>
 
       {/* Specifications Table & Policies */}
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pt-8 border-t border-slate-800">
+      <div className="grid grid-cols-1 gap-8 pt-8 border-t border-slate-800">
         <div className="md:col-span-8 space-y-4">
           <h3 className="text-xl font-bold text-white tracking-tight">Technical Specifications</h3>
           <div className="divide-y divide-slate-800 rounded-2xl bg-slate-900/60 border border-slate-800 overflow-hidden text-xs">
@@ -323,34 +323,6 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
           </div>
         </div>
 
-        <div className="md:col-span-4 space-y-4">
-          <h3 className="text-xl font-bold text-white tracking-tight">Peace of Mind Guarantee</h3>
-          <div className="p-5 rounded-2xl bg-slate-900/60 border border-slate-800 space-y-4 text-xs">
-            <div className="flex items-start gap-3">
-              <Truck className="w-5 h-5 text-red-500 shrink-0" />
-              <div>
-                <h5 className="font-bold text-white mb-0.5">Fast Nationwide Delivery</h5>
-                <p className="text-slate-400">Tracked delivery across all 36 states or 2-hour pickup in Computer Village Ikeja.</p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0" />
-              <div>
-                <h5 className="font-bold text-white mb-0.5">{product.warranty}</h5>
-                <p className="text-slate-400">Comprehensive warranty covers screen diagnostics, camera testing, and logic board safety.</p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3">
-              <RotateCcw className="w-5 h-5 text-cyan-400 shrink-0" />
-              <div>
-                <h5 className="font-bold text-white mb-0.5">7-Day Exchange Policy</h5>
-                <p className="text-slate-400">If any factory defect is discovered within 7 days, receive an immediate unit replacement.</p>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
 
       {/* Added to Cart notification toast */}
