@@ -300,7 +300,6 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
 
           </div>
         </div>
-      </div>
 
       {/* Technical Specifications */}
       <div className="grid grid-cols-1 gap-8 pt-8 border-t border-slate-800">
