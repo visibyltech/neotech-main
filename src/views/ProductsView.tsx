@@ -6,7 +6,6 @@ import {
   Search,
   Sparkles,
   Smartphone,
-  BatteryCharging,
   Layers,
   ArrowUpDown,
 } from 'lucide-react';
@@ -35,7 +34,6 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
   const [selectedCategory, setSelectedCategory] = useState<string>(initialCategory || 'all');
   const [selectedCondition, setSelectedCondition] = useState<string>(initialCondition || 'all');
   const [selectedBrand, setSelectedBrand] = useState<string>('all');
-  const [minBatteryHealth, setMinBatteryHealth] = useState<number>(0);
   const [sortBy, setSortBy] = useState<'featured' | 'price-asc' | 'price-desc' | 'newest'>('featured');
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
 
@@ -77,11 +75,6 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
         return false;
       }
 
-      // Battery Health
-      if (minBatteryHealth > 0) {
-        if (!p.batteryHealth || p.batteryHealth < minBatteryHealth) return false;
-      }
-
       return true;
     }).sort((a, b) => {
       if (sortBy === 'price-asc') return a.price - b.price;
@@ -89,13 +82,12 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
       if (sortBy === 'newest') return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
       return (b.featured ? 1 : 0) - (a.featured ? 1 : 0);
     });
-  }, [products, searchQuery, selectedCategory, selectedCondition, selectedBrand, minBatteryHealth, sortBy]);
+  }, [products, searchQuery, selectedCategory, selectedCondition, selectedBrand, sortBy]);
 
   const resetFilters = () => {
     setSelectedCategory('all');
     setSelectedCondition('all');
     setSelectedBrand('all');
-    setMinBatteryHealth(0);
     setSortBy('featured');
   };
 
@@ -103,7 +95,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
     selectedCategory !== 'all' ||
     selectedCondition !== 'all' ||
     selectedBrand !== 'all' ||
-    minBatteryHealth > 0;
+
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
@@ -250,33 +242,6 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
               </div>
             </div>
 
-            {/* Battery Health Filter (for UK-Used) */}
-            <div className="space-y-2 pt-2 border-t border-slate-800">
-              <div className="flex items-center justify-between text-xs">
-                <label className="font-semibold text-slate-300 flex items-center gap-1">
-                  <BatteryCharging className="w-3.5 h-3.5 text-cyan-400" />
-                  Min. Battery Health
-                </label>
-                <span className="font-bold text-cyan-400">
-                  {minBatteryHealth > 0 ? `${minBatteryHealth}%+` : 'Any'}
-                </span>
-              </div>
-              <input
-                type="range"
-                min="0"
-                max="100"
-                step="5"
-                value={minBatteryHealth}
-                onChange={(e) => setMinBatteryHealth(Number(e.target.value))}
-                className="w-full accent-cyan-500 bg-slate-800 h-2 rounded-lg cursor-pointer"
-              />
-              <div className="flex justify-between text-[10px] text-slate-500">
-                <span>Any</span>
-                <span>85%</span>
-                <span>90%</span>
-                <span>100%</span>
-              </div>
-            </div>
           </div>
         </aside>
 
@@ -306,14 +271,6 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                 <span className="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 flex items-center gap-1">
                   Brand: {selectedBrand}
                   <button onClick={() => setSelectedBrand('all')}>
-                    <X className="w-3 h-3 text-slate-400 hover:text-white" />
-                  </button>
-                </span>
-              )}
-              {minBatteryHealth > 0 && (
-                <span className="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-cyan-400 flex items-center gap-1">
-                  Battery: {minBatteryHealth}%+
-                  <button onClick={() => setMinBatteryHealth(0)}>
                     <X className="w-3 h-3 text-slate-400 hover:text-white" />
                   </button>
                 </span>
