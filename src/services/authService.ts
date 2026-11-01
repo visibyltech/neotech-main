@@ -12,7 +12,7 @@ import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { auth, db, googleProvider, handleFirestoreError, OperationType } from '../firebase';
 import { UserProfile, SavedAddress } from '../types';
 
-const ADMIN_EMAIL = 'usitakatelvin@gmail.com';
+const ADMIN_EMAIL = 'neotechgadget001@gmail.com';
 const USERS_COL = 'users';
 const ADMINS_COL = 'admins';
 
