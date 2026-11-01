@@ -126,6 +126,8 @@ export interface Order {
     lga: string;
     fullAddress: string;
     instructions?: string;
+    recipientName?: string;
+    recipientPhone?: string;
   };
   pickupLocationId?: string;
   paymentMethod: PaymentMethod;
