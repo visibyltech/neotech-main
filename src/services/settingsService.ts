@@ -36,6 +36,7 @@ export const settingsService = {
           const migrated: BusinessSettings = {
             ...INITIAL_SETTINGS,
             ...stored,
+            bankDetails,
             contactInfo: {
               ...storedContact,
               phone: INITIAL_SETTINGS.contactInfo.phone,
