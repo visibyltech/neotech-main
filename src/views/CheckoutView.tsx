@@ -7,8 +7,6 @@ import {
   ArrowRight,
   ArrowLeft,
   Building,
-  CreditCard,
-  Zap,
   Truck,
   Store,
   FileText,
@@ -41,8 +39,7 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({ onNavigate, onOpenRe
 
   // Payment method
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('pay-now');
-  const [paymentType, setPaymentType] = useState<'bank_transfer' | 'card_gateway'>('bank_transfer');
-  const [proofFile, setProofFile] = useState<File | null>(null);
+    const [proofFile, setProofFile] = useState<File | null>(null);
   const [proofPreview, setProofPreview] = useState<string>('');
   const [copiedBank, setCopiedBank] = useState(false);
 
@@ -83,8 +80,27 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({ onNavigate, onOpenRe
     e.preventDefault();
     setErrorMessage('');
 
+    if (!firebaseUser) {
+      openAuthModal('login');
+      return;
+    }
+
     if (items.length === 0) {
       setErrorMessage('Your cart is empty. Add products before checking out.');
+      return;
+    }
+
+    if (paymentMethod !== 'pay-now') {
+      if (items.length !== 1) {
+        setErrorMessage('Buy Now Pay Later and Save to Buy currently apply to one product at a time. Please keep only one product in your cart to continue.');
+        return;
+      }
+      onNavigate(paymentMethod === 'save-to-buy' ? 'save-to-buy' : 'bnpl', { productId: items[0].productId });
+      return;
+    }
+
+    if (!proofPreview) {
+      setErrorMessage('Please upload your bank transfer receipt before placing the order.');
       return;
     }
 
@@ -133,7 +149,7 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({ onNavigate, onOpenRe
       }));
 
       const newOrder = await ordersService.createOrder({
-        userId: firebaseUser?.uid || 'guest_' + Date.now(),
+        userId: firebaseUser.uid,
         customerName: customerName.trim(),
         customerEmail: customerEmail.trim(),
         customerPhone: customerPhone.trim(),
@@ -149,7 +165,7 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({ onNavigate, onOpenRe
           instructions: deliveryInstructions.trim(),
         } : undefined,
         pickupLocationId: fulfillmentType === 'pickup' ? 'warri-store' : undefined,
-        paymentMethod: paymentMethod === 'credably-bnpl' ? 'credably-bnpl' : 'pay-now',
+        paymentMethod,
         proofOfPaymentUrl: uploadedProofUrl,
         paymentReference: `NTG-REF-${Math.floor(100000 + Math.random() * 900000)}`,
         notes: `Order placed via website (${paymentMethod}).`,
@@ -174,6 +190,24 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({ onNavigate, onOpenRe
       setIsSubmitting(false);
     }
   };
+
+  // Checkout is only available to authenticated customers.
+  if (!firebaseUser) {
+    return (
+      <div className="max-w-xl mx-auto px-4 py-20 text-center space-y-5">
+        <div className="w-14 h-14 mx-auto rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center">
+          <ShieldCheck className="w-6 h-6 text-red-400" />
+        </div>
+        <h1 className="text-2xl font-extrabold text-white">Sign in to continue to checkout</h1>
+        <p className="text-sm text-slate-400">Please sign in or create an account before placing an order. Your cart will remain saved.</p>
+        <div className="flex justify-center gap-3">
+          <button type="button" onClick={() => openAuthModal('login')} className="px-5 py-3 rounded-xl bg-red-600 text-white font-bold text-sm">Sign In</button>
+          <button type="button" onClick={() => openAuthModal('signup')} className="px-5 py-3 rounded-xl bg-slate-800 text-white font-bold text-sm">Create Account</button>
+        </div>
+        <button type="button" onClick={() => onNavigate('cart')} className="text-xs text-slate-400 hover:text-white">Return to cart</button>
+      </div>
+    );
+  }
 
   // Order Confirmed View
   if (completedOrder) {
@@ -412,37 +446,34 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({ onNavigate, onOpenRe
               Payment Method
             </h3>
 
-            {/* Payment selector tabs */}
-            <div className="grid grid-cols-2 gap-3">
-              <button
-                type="button"
-                onClick={() => setPaymentType('bank_transfer')}
-                className={`p-3.5 rounded-2xl border text-xs font-semibold flex items-center justify-center gap-2 transition ${
-                  paymentType === 'bank_transfer'
-                    ? 'bg-red-600/10 text-red-400 border-red-500 shadow-md'
-                    : 'bg-slate-950 text-slate-400 border-slate-800 hover:text-white'
-                }`}
-              >
-                <Building className="w-4 h-4" />
-                <span>Bank Transfer (Verified)</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setPaymentType('card_gateway')}
-                className={`p-3.5 rounded-2xl border text-xs font-semibold flex items-center justify-center gap-2 transition ${
-                  paymentType === 'card_gateway'
-                    ? 'bg-red-600/10 text-red-400 border-red-500 shadow-md'
-                    : 'bg-slate-950 text-slate-400 border-slate-800 hover:text-white'
-                }`}
-              >
-                <CreditCard className="w-4 h-4" />
-                <span>Online Card / Gateway</span>
-              </button>
+            {/* Select how you want to pay for this order */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {([
+                { value: 'pay-now', title: 'Buy and Pay Now', detail: 'Transfer and upload receipt', icon: Building },
+                { value: 'credably-bnpl', title: 'Buy Now Pay Later', detail: 'Apply through Credably', icon: ShieldCheck },
+                { value: 'save-to-buy', title: 'Save to Buy', detail: 'Choose a savings schedule', icon: Store },
+              ] as const).map(option => {
+                const Icon = option.icon;
+                return (
+                  <button
+                    key={option.value}
+                    type="button"
+                    onClick={() => setPaymentMethod(option.value)}
+                    className={`p-3 rounded-xl border text-left transition ${
+                      paymentMethod === option.value
+                        ? 'bg-red-600/10 border-red-500 text-white'
+                        : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    <Icon className="w-4 h-4 mb-2" />
+                    <span className="block text-xs font-bold">{option.title}</span>
+                    <span className="block text-[10px] mt-1 opacity-80">{option.detail}</span>
+                  </button>
+                );
+              })}
             </div>
 
-            {/* Bank Transfer Details Box */}
-            {paymentType === 'bank_transfer' ? (
+            {paymentMethod === 'pay-now' ? (
               <div className="p-5 rounded-2xl bg-slate-950 border border-slate-800 space-y-4 text-xs">
                 <div className="space-y-1">
                   <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400">
@@ -452,20 +483,20 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({ onNavigate, onOpenRe
                     <div className="flex justify-between items-center">
                       <span className="text-slate-400">Bank:</span>
                       <span className="font-bold text-white">
-                        {settings?.bankDetails.bankName || 'Access Bank PLC'}
+                        {settings?.bankDetails.bankName || 'Premium Trust'}
                       </span>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-slate-400">Account Name:</span>
                       <span className="font-bold text-white">
-                        {settings?.bankDetails.accountName || 'NEO TECH GADGET RETAIL NIG LTD'}
+                        {settings?.bankDetails.accountName || 'NEOTECHGADGET'}
                       </span>
                     </div>
                     <div className="flex justify-between items-center pt-1 border-t border-slate-800">
                       <span className="text-slate-400">Account Number:</span>
                       <div className="flex items-center gap-2">
                         <span className="font-mono text-base font-extrabold text-red-400">
-                          {settings?.bankDetails.accountNumber || '1849302194'}
+                          {settings?.bankDetails.accountNumber || '0040250513'}
                         </span>
                         <button
                           type="button"
@@ -521,17 +552,13 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({ onNavigate, onOpenRe
                 </div>
               </div>
             ) : (
-              <div className="p-5 rounded-2xl bg-slate-950 border border-slate-800 space-y-3 text-xs text-slate-300">
-                <div className="flex items-center gap-2 text-white font-bold">
-                  <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                  <span>Secure 256-Bit Encrypted Payment</span>
-                </div>
-                <p className="text-slate-400 text-[11px]">
-                  Pay with Mastercard, Visa, Verve, or direct USSD debit. Immediate confirmation upon successful debit.
-                </p>
-                <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-[11px] text-slate-400">
-                  Ready to process <span className="font-bold text-white">{formatNaira(totalPrice)}</span> via secure online transaction.
-                </div>
+              <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-300">
+                {paymentMethod === 'credably-bnpl'
+                  ? 'Continue to the Credably application to review the financing terms and submit your application.'
+                  : 'Continue to Save to Buy to choose your savings duration and payment frequency.'}
+                {items.length > 1 && (
+                  <p className="mt-2 text-amber-400">Financing applies to one product at a time. Remove other items from your cart before continuing.</p>
+                )}
               </div>
             )}
           </div>
@@ -599,7 +626,7 @@ export const CheckoutView: React.FC<CheckoutViewProps> = ({ onNavigate, onOpenRe
               ) : (
                 <>
                   <ShieldCheck className="w-4 h-4" />
-                  <span>Confirm & Place Order</span>
+                  <span>{paymentMethod === 'pay-now' ? 'Submit Receipt & Place Order' : paymentMethod === 'credably-bnpl' ? 'Continue to Credably' : 'Continue to Save to Buy'}</span>
                   <ArrowRight className="w-4 h-4" />
                 </>
               )}
