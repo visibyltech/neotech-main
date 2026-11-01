@@ -154,12 +154,6 @@ function MainApp() {
             product={selectedProduct}
             onBack={() => handleNavigate('products')}
             onNavigate={handleNavigate}
-            onOpenSaveToBuyModal={(prod, opts) => {
-              handleNavigate('save-to-buy', { productId: prod.id });
-            }}
-            onOpenBNPLModal={(prod, opts) => {
-              handleNavigate('bnpl', { productId: prod.id });
-            }}
           />
         )}
 
