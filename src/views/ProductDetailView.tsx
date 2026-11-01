@@ -22,7 +22,6 @@ import { Product, SavingsFrequency } from '../types';
 import { formatNaira } from '../utils/formatters';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
-import { useAuth } from '../context/AuthContext';
 
 interface ProductDetailViewProps {
   product: Product;
@@ -41,7 +40,6 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
 }) => {
   const { addToCart } = useCart();
   const { wishlist, toggleWishlist } = useWishlist();
-  const { firebaseUser, openAuthModal } = useAuth();
 
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [selectedColor, setSelectedColor] = useState(product.colors[0] || 'Default');
@@ -96,6 +94,21 @@ export const ProductDetailView: React.FC<ProductDetailViewProps> = ({
               title="Click to Zoom"
             >
               <Maximize2 className="w-4 h-4" />
+            </button>
+
+            {/* Wishlist control */}
+            <button
+              type="button"
+              onClick={() => toggleWishlist(product.id)}
+              className={`absolute top-4 right-4 z-10 p-3 rounded-xl border backdrop-blur-md transition ${
+                isLiked
+                  ? 'bg-red-600 text-white border-red-500'
+                  : 'bg-slate-900/80 text-slate-300 border-slate-700 hover:text-white'
+              }`}
+              aria-label={isLiked ? 'Remove from wishlist' : 'Add to wishlist'}
+              title={isLiked ? 'Remove from wishlist' : 'Add to wishlist'}
+            >
+              <Heart className={`w-5 h-5 ${isLiked ? 'fill-current' : ''}`} />
             </button>
 
             {/* Condition pill */}
